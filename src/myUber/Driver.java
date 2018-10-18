@@ -7,6 +7,7 @@ public class Driver extends Lock{
 	private String name;
 	private String surname;
 	private String state;
+	private Car car;
 	
 	private static int nextID = 1;
 
@@ -45,6 +46,11 @@ public class Driver extends Lock{
 
 	public void setState(String state) {
 		this.state = state;
+	}
+	
+	public void takeCar(Car car) {
+		this.car = car;
+		car.lock();
 	}
 
 }

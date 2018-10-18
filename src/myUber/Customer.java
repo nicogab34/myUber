@@ -6,13 +6,13 @@ public class Customer {
 	private int ID;
 	private String name;
 	private String surname;
-	private ArrayList<Float> coordinates;
+	private ArrayList<Double> coordinates;
 	private int creditCardNumber;
-	private ArrayList<Message> messages = ArrayList<Message>();
+	private ArrayList<Message> messages = new ArrayList<Message>();
 	
 	private static int nextID = 1;
 
-	public Customer(String name, String surname, ArrayList<Float> coordinates, int creditCardNumber) {
+	public Customer(String name, String surname, ArrayList<Double> coordinates, int creditCardNumber) {
 		super();
 		this.name = name;
 		this.surname = surname;
@@ -42,11 +42,11 @@ public class Customer {
 		this.surname = surname;
 	}
 
-	public ArrayList<Float> getCoordinates() {
+	public ArrayList<Double> getCoordinates() {
 		return coordinates;
 	}
 
-	public void setCoordinates(ArrayList<Float> coordinates) {
+	public void setCoordinates(ArrayList<Double> coordinates) {
 		this.coordinates = coordinates;
 	}
 
