@@ -19,6 +19,10 @@ public class MyUber {
 		d1.takeCar(v1);
 		d2.takeCar(s1);
 		d3.takeCar(b1);
+		
+		ArrayList<Double> dest1 = new ArrayList<Double>(Arrays.asList(3.5, 2.7));
+		
+		c1.setDestination(dest1);
 	}
 
 }

@@ -9,6 +9,7 @@ public class Customer {
 	private ArrayList<Double> coordinates;
 	private int creditCardNumber;
 	private ArrayList<Message> messages = new ArrayList<Message>();
+	private ArrayList<Double> destination = new  ArrayList<Double>();
 	
 	private static int nextID = 1;
 
@@ -64,6 +65,14 @@ public class Customer {
 
 	public void setMessages(ArrayList<Message> messages) {
 		this.messages = messages;
+	}
+
+	public ArrayList<Double> getDestination() {
+		return destination;
+	}
+
+	public void setDestination(ArrayList<Double> destination) {
+		this.destination = destination;
 	}
 	
 }

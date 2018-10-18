@@ -50,7 +50,6 @@ public class Driver extends Lock{
 	
 	public void takeCar(Car car) {
 		this.car = car;
-		car.lock();
 	}
 
 }
