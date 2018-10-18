@@ -7,7 +7,7 @@ public class Van extends Car{
 	private static int nextID = 1;
 
 	public Van(ArrayList<Driver> owners) {
-		super(seats, "Standard"+nextID, owners);
+		super(seats, "Van"+nextID, owners);
 		nextID++;
 	}
 

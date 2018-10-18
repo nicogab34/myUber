@@ -7,7 +7,7 @@ public class Berline extends Car{
 	private static int nextID = 1;
 
 	public Berline(ArrayList<Driver> owners) {
-		super(seats, "Standard"+nextID, owners);
+		super(seats, "Berline"+nextID, owners);
 		nextID++;
 	}
 	
