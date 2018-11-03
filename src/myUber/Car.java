@@ -9,13 +9,15 @@ public abstract class Car{
 	private int seats;
 	private String ID;
 	private ArrayList<Driver> owners;
+	private String rideType;
 	
 	
-	public Car(int seats, String iD, ArrayList<Driver> owners) {
+	public Car(int seats, String iD, ArrayList<Driver> owners, String rideType) {
 		super();
 		this.seats = seats;
 		ID = iD;
 		this.owners = owners;
+		this.rideType = rideType;
 	}
 
 

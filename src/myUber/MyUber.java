@@ -32,7 +32,6 @@ public class MyUber {
 	}
 
 	public static void main(String[] args) {
-		
 		MyUber platform = new MyUber();
 		
 		Driver d1 = new Driver("Vincent", "Bouget", "on-duty");
@@ -43,10 +42,11 @@ public class MyUber {
 		System.out.println(d2);
 		System.out.println(d3);
 		
+		CarFactory carFactory = new CarFactory();
 		
-		Van v1 = new Van(new ArrayList<Driver>(Arrays.asList(d1,d2)));
-		Standard s1 = new Standard(new ArrayList<Driver>(Arrays.asList(d2)));
-		Berline b1 = new Berline(new ArrayList<Driver>(Arrays.asList(d3)));
+		Car v1 = carFactory.createCar("Van", new ArrayList<Driver>(Arrays.asList(d1,d2)),"");
+		Car s1 = carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d2)), "UberX");
+		Car b1 = carFactory.createCar("Berline", new ArrayList<Driver>(Arrays.asList(d3)),"");
 		
 		Customer c1 = new Customer("Baptiste", "Andrieu", new ArrayList<Double>(Arrays.asList(1.2, 4.3)), 125765894);
 		
