@@ -11,17 +11,39 @@ public class MyUber {
 		super();
 	}
 	
-	private ArrayList<Driver> setDestination(Customer c,ArrayList<Double> destination){
+	private void setDestination(Customer c,ArrayList<Double> destination){
 		c.setDestination(destination);
-		return this.search(c.getCoordinates(), c.getDestination());
 	}
 	
-	
-	private ArrayList<Driver> search(ArrayList<Double> position, ArrayList<Double> destination){
-		ArrayList<Driver> res = new ArrayList<Driver>();
-		
-		return res;
+	private double distance(Customer customer,Driver driver) {
+		ArrayList<Double> positionCustomer=customer.getCoordinates();
+		ArrayList<Double> positionDriver=driver.getPosition();
+		double x1=positionCustomer.get(0);
+		double x2=positionDriver.get(0);
+		double y1=positionCustomer.get(1);
+		double y2=positionDriver.get(1);
+		return(Math.sqrt(Math.pow(x1-x2,2)+Math.pow(y1-y2,2)));
+			
 	}
+	
+	private Driver search(Customer customer, String Ridetype){
+		ArrayList<Driver> Cond = new ArrayList<Driver>();
+
+		for (int i=0;i<drivingDrivers.size();i++){
+			Car car=drivingDrivers.get(i).getCar();
+			if (car.getRideType()==Ridetype){
+				Cond.add(drivingDrivers.get(i));}
+		}
+		Driver res=(Cond.get(0));
+		for (int j=1;j<Cond.size();j++){
+			if(distance(customer,Cond.get(j))<distance(customer,res)) {
+				res=Cond.get(j);}
+			}
+		return(res);
+			
+			
+		}
+
 	private void add(Driver driver) {
 		this.drivers.add(driver);
 	}
@@ -34,9 +56,9 @@ public class MyUber {
 	public static void main(String[] args) {
 		MyUber platform = new MyUber();
 		
-		Driver d1 = new Driver("Vincent", "Bouget", "on-duty");
-		Driver d2 = new Driver("Daniel", "(Taxi)", "on-duty");
-		Driver d3 = new Driver("Nicolas", "Gabrion", "on-duty");
+		Driver d1 = new Driver("Vincent", "Bouget", "on-duty",new ArrayList<Double>(Arrays.asList(1.,5.)));
+		Driver d2 = new Driver("Daniel", "(Taxi)", "on-duty",new ArrayList<Double>(Arrays.asList(90.,50.)));
+		Driver d3 = new Driver("Nicolas", "Gabrion", "on-duty",new ArrayList<Double>(Arrays.asList(10.,6.)));
 		
 		System.out.println(d1);
 		System.out.println(d2);
@@ -45,8 +67,8 @@ public class MyUber {
 		CarFactory carFactory = new CarFactory();
 		
 		Car v1 = carFactory.createCar("Van", new ArrayList<Driver>(Arrays.asList(d1,d2)),"");
-		Car s1 = carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d2)), "UberX");
-		Car b1 = carFactory.createCar("Berline", new ArrayList<Driver>(Arrays.asList(d3)),"");
+		Car s1 = carFactory.createCar("Van", new ArrayList<Driver>(Arrays.asList(d2)), "");
+		Car b1 = carFactory.createCar("Van", new ArrayList<Driver>(Arrays.asList(d3)),"");
 		
 		Customer c1 = new Customer("Baptiste", "Andrieu", new ArrayList<Double>(Arrays.asList(1.2, 4.3)), 125765894);
 		
@@ -69,6 +91,8 @@ public class MyUber {
 		System.out.println(c1);
 		
 		/* platform.search(c1.coordinates, c1.destination) */
+		Driver a=platform.search(c1,"UberVan");
+		System.out.println(a);
 		
 		
 	}

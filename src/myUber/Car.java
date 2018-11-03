@@ -39,6 +39,16 @@ public abstract class Car{
 	public String getID() {
 		return ID;
 	}
+
+
+	public String getRideType() {
+		return rideType;
+	}
+
+
+	public void setRideType(String rideType) {
+		this.rideType = rideType;
+	}
 	
 	
 	

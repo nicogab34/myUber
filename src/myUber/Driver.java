@@ -1,5 +1,7 @@
 package myUber;
 
+import java.util.ArrayList;
+
 import sun.misc.Lock;
 
 public class Driver extends Lock{
@@ -8,16 +10,17 @@ public class Driver extends Lock{
 	private String surname;
 	private String state;
 	private Car car;
-	
+	private ArrayList<Double> position;
 	private static int nextID = 1;
 
-	public Driver(String name, String surname, String state) {
+	public Driver(String name, String surname, String state,ArrayList<Double> position) {
 		super();
 		this.name = name;
 		this.surname = surname;
 		this.state = state;
 		this.ID = nextID;
 		nextID++;
+		this.position=position;
 	}
 
 	public int getID() {
@@ -54,6 +57,15 @@ public class Driver extends Lock{
 	
 	public Car getCar() {
 		return car;
+	}
+	
+
+	public ArrayList<Double> getPosition() {
+		return position;
+	}
+
+	public void setPosition(ArrayList<Double> position) {
+		this.position = position;
 	}
 
 	public String toString() {
