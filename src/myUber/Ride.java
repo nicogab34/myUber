@@ -12,7 +12,12 @@ public abstract class Ride {
 		ID = iD;
 		this.driver = driver;
 	}
-	
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
 	
 	
 }
