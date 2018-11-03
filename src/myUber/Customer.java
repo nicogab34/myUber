@@ -75,4 +75,23 @@ public class Customer {
 		this.destination = destination;
 	}
 	
+	
+	public String toString() {
+		String destinationString;
+		if (this.destination.size() == 0) {
+			destinationString = "Not defined yet";
+		}
+		else {
+			destinationString = this.destination.toString();
+		}
+		return
+		"## CUSTOMER ##\n"+
+		"ID : "+this.ID+"\n"+
+		"Name : "+this.name+"\n"+
+		"Surname : "+this.surname+"\n"+
+		"Coordinates : "+this.coordinates+"\n"+
+		"Credit Card Number : "+this.creditCardNumber+"\n"+
+		"Destination : "+destinationString+"\n";
+	}
+	
 }

@@ -51,5 +51,25 @@ public class Driver extends Lock{
 	public void takeCar(Car car) {
 		this.car = car;
 	}
+	
+	public Car getCar() {
+		return car;
+	}
+
+	public String toString() {
+		String carString;
+		if (this.car==null) {
+			carString = "No car";
+		}
+		else {
+			carString = this.car.getID();
+		}
+		return "## DRIVER ##\n"+
+	"ID : "+this.ID+"\n"+
+	"Name : "+this.name+"\n"+
+	"Surname : "+this.surname+"\n"+
+	"State : "+this.state+"\n"+
+	"Car : "+carString+"\n";
+	}
 
 }
