@@ -2,13 +2,13 @@ package myUber;
 
 import java.util.ArrayList;
 
-public class Customer {
+public class Customer{
 	private int ID;
 	private String name;
 	private String surname;
 	private ArrayList<Double> coordinates;
 	private int creditCardNumber;
-	private ArrayList<Message> messages = new ArrayList<Message>();
+	private ArrayList<Request> requests = new ArrayList<Request>();
 	private ArrayList<Double> destination = new  ArrayList<Double>();
 	
 	private static int nextID = 1;
@@ -59,12 +59,12 @@ public class Customer {
 		this.creditCardNumber = creditCardNumber;
 	}
 
-	public ArrayList<Message> getMessages() {
-		return messages;
+	public ArrayList<Request> getRequests() {
+		return requests;
 	}
 
-	public void setMessages(ArrayList<Message> messages) {
-		this.messages = messages;
+	public void setRequests(ArrayList<Request> requests) {
+		this.requests = requests;
 	}
 
 	public ArrayList<Double> getDestination() {
@@ -75,6 +75,15 @@ public class Customer {
 		this.destination = destination;
 	}
 	
+	public void answer(String chosenRideType,Request request) {
+		request.setChoice(chosenRideType);
+	}
+	
+	public void notify(ArrayList<Double> prices, ArrayList<String> rideTypes) {
+		for (int i=0;i<prices.size(); i++) {
+			System.out.println(rideTypes.get(i)+" : "+prices.get(i));
+		}
+	}
 	
 	public String toString() {
 		String destinationString;
