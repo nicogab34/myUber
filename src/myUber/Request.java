@@ -8,6 +8,12 @@ public class Request{
 	ArrayList<Double> prices;
 	String choice;
 	
+	public Request(Customer c, MyUber platform) {
+		super();
+		this.customer=c;
+		this.platform = platform;
+	}
+	
 	public ArrayList<Double> getPrices() {
 		return prices;
 	}

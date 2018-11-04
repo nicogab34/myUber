@@ -13,6 +13,7 @@ public class MyUber {
 	
 	private void setDestination(Customer c,ArrayList<Double> destination){
 		c.setDestination(destination);
+		c.setRequest(new Request(c, this));
 	}
 	
 	private double distance(Customer customer,Driver driver) {

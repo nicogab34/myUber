@@ -8,7 +8,7 @@ public class Customer{
 	private String surname;
 	private ArrayList<Double> coordinates;
 	private int creditCardNumber;
-	private ArrayList<Request> requests = new ArrayList<Request>();
+	private Request request ;
 	private ArrayList<Double> destination = new  ArrayList<Double>();
 	
 	private static int nextID = 1;
@@ -59,12 +59,12 @@ public class Customer{
 		this.creditCardNumber = creditCardNumber;
 	}
 
-	public ArrayList<Request> getRequests() {
-		return requests;
+	public Request getRequest() {
+		return request;
 	}
 
-	public void setRequests(ArrayList<Request> requests) {
-		this.requests = requests;
+	public void setRequest(Request request) {
+		this.request = request;
 	}
 
 	public ArrayList<Double> getDestination() {
