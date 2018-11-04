@@ -85,6 +85,10 @@ public class Customer{
 		}
 	}
 	
+	public void chooseRideType(String rideType) {
+		this.request.setChoice(rideType);
+	}
+	
 	public String toString() {
 		String destinationString;
 		if (this.destination.size() == 0) {

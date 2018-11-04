@@ -11,6 +11,7 @@ public class Driver extends Lock{
 	private String state;
 	private Car car;
 	private ArrayList<Double> position;
+	private ArrayList<Customer> requests = new ArrayList<Customer>();
 	private static int nextID = 1;
 
 	public Driver(String name, String surname, String state,ArrayList<Double> position) {
@@ -66,6 +67,14 @@ public class Driver extends Lock{
 
 	public void setPosition(ArrayList<Double> position) {
 		this.position = position;
+	}
+	
+	public void addRequest(Customer customer) {
+		this.requests.add(customer);
+	}
+	
+	public void decideRequest(boolean b,Customer c) {
+		
 	}
 
 	public String toString() {

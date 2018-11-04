@@ -25,6 +25,8 @@ public class Request{
 	}
 	public void setChoice(String choice) {
 		this.choice = choice;
+		Driver driver = this.platform.search(this.customer, this.choice);
+		driver.addRequest(customer);
 	}
 	
 	

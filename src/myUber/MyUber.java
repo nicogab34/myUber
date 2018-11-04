@@ -6,6 +6,7 @@ import java.util.Arrays;
 public class MyUber {
 	private ArrayList<Driver> drivers = new ArrayList<Driver>();
 	private ArrayList<Driver> drivingDrivers = new ArrayList<Driver>();
+	private ArrayList<Ride> rides = new ArrayList<Ride>();
 	
 	public MyUber() {
 		super();
@@ -27,7 +28,7 @@ public class MyUber {
 			
 	}
 	
-	private Driver search(Customer customer, String Ridetype){
+	public Driver search(Customer customer, String Ridetype){
 		ArrayList<Driver> Cond = new ArrayList<Driver>();
 
 		for (int i=0;i<drivingDrivers.size();i++){
@@ -52,6 +53,10 @@ public class MyUber {
 	private void takeCar(Driver driver, Car car) {
 		driver.takeCar(car);
 		this.drivingDrivers.add(driver);
+	}
+	
+	private void chooseRideType(Customer c, String rideType) {
+		c.chooseRideType(rideType);
 	}
 
 	public static void main(String[] args) {
@@ -94,6 +99,8 @@ public class MyUber {
 		/* platform.search(c1.coordinates, c1.destination) */
 		Driver a=platform.search(c1,"UberVan");
 		System.out.println(a);
+		
+		platform.chooseRideType(c1, "UberVan");
 		
 		
 	}
