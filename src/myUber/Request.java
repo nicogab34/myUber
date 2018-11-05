@@ -25,9 +25,24 @@ public class Request{
 	}
 	public void setChoice(String choice) {
 		this.choice = choice;
-		Driver driver = this.platform.search(this.customer, this.choice);
-		driver.addRequest(customer);
+		Driver driver = this.platform.search(this.customer, choice);
+		if (driver == null) {
+			this.customer.setRequest(null);
+		}
+		else {
+			driver.addRequest(this.customer);
+		}
 	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public MyUber getPlatform() {
+		return platform;
+	}
+	
+	
 	
 	
 }

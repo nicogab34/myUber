@@ -74,7 +74,7 @@ public class Driver extends Lock{
 	}
 	
 	public void decideRequest(boolean b,Customer c) {
-		
+
 	}
 
 	public String toString() {

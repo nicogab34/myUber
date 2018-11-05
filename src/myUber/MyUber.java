@@ -7,14 +7,20 @@ public class MyUber {
 	private ArrayList<Driver> drivers = new ArrayList<Driver>();
 	private ArrayList<Driver> drivingDrivers = new ArrayList<Driver>();
 	private ArrayList<Ride> rides = new ArrayList<Ride>();
+	private RideFactory rideFactory;
+	private CarFactory carFactory;
 	
-	public MyUber() {
+	public MyUber(RideFactory rideFactory, CarFactory carFactory) {
 		super();
+		this.rideFactory = rideFactory;
+		this.carFactory = carFactory;
 	}
 	
+	
 	private void setDestination(Customer c,ArrayList<Double> destination){
-		c.setDestination(destination);
 		c.setRequest(new Request(c, this));
+		System.out.println(c.getRequest().getCustomer());
+		c.setDestination(destination);
 	}
 	
 	private double distance(Customer customer,Driver driver) {
@@ -29,18 +35,13 @@ public class MyUber {
 	}
 	
 	public Driver search(Customer customer, String Ridetype){
-		ArrayList<Driver> Cond = new ArrayList<Driver>();
-
+		Driver res = null;
 		for (int i=0;i<drivingDrivers.size();i++){
 			Car car=drivingDrivers.get(i).getCar();
-			if (car.getRideType()==Ridetype){
-				Cond.add(drivingDrivers.get(i));}
-		}
-		Driver res=(Cond.get(0));
-		for (int j=1;j<Cond.size();j++){
-			if(distance(customer,Cond.get(j))<distance(customer,res)) {
-				res=Cond.get(j);}
+			if (((car.getRideType()==Ridetype) & (drivingDrivers.get(i).getState() == "on-duty") & ((res == null) || distance(customer,drivingDrivers.get(i))< distance(customer,res)))){
+
 			}
+		}
 		return(res);
 			
 			
@@ -58,11 +59,27 @@ public class MyUber {
 	private void chooseRideType(Customer c, String rideType) {
 		c.chooseRideType(rideType);
 	}
+	
+	private void decideRequest(Driver driver, boolean b, Customer customer) {
+		if (!b) {
+			customer.setRequest(null);
+		}
+		else if (customer.getRequest() != null){
+			System.out.print(customer.getRequest());
+			this.rides.add(this.rideFactory.createRide(customer.getRequest().getChoice(),customer, driver));
+			driver.setState("on-a-ride");
+		}
+	}
 
 	public static void main(String[] args) {
-		MyUber platform = new MyUber();
 		
-		Driver d1 = new Driver("Vincent", "Bouget", "on-duty",new ArrayList<Double>(Arrays.asList(1.,5.)));
+		RideFactory rideFactory = new RideFactory();
+		
+		CarFactory carFactory = new CarFactory();
+		
+		MyUber platform = new MyUber(rideFactory, carFactory);
+		
+		Driver d1 = new Driver("Vincent", "Bouget", "off-duty",new ArrayList<Double>(Arrays.asList(1.,5.)));
 		Driver d2 = new Driver("Daniel", "(Taxi)", "on-duty",new ArrayList<Double>(Arrays.asList(90.,50.)));
 		Driver d3 = new Driver("Nicolas", "Gabrion", "on-duty",new ArrayList<Double>(Arrays.asList(10.,6.)));
 		
@@ -70,11 +87,9 @@ public class MyUber {
 		System.out.println(d2);
 		System.out.println(d3);
 		
-		CarFactory carFactory = new CarFactory();
-		
-		Car v1 = carFactory.createCar("Van", new ArrayList<Driver>(Arrays.asList(d1,d2)),"");
-		Car s1 = carFactory.createCar("Van", new ArrayList<Driver>(Arrays.asList(d2)), "");
-		Car b1 = carFactory.createCar("Van", new ArrayList<Driver>(Arrays.asList(d3)),"");
+		Car v1 = platform.carFactory.createCar("Van", new ArrayList<Driver>(Arrays.asList(d1,d2)),"");
+		Car s1 = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d2)), "");
+		Car b1 = platform.carFactory.createCar("Berline", new ArrayList<Driver>(Arrays.asList(d3)),"");
 		
 		Customer c1 = new Customer("Baptiste", "Andrieu", new ArrayList<Double>(Arrays.asList(1.2, 4.3)), 125765894);
 		
@@ -102,7 +117,11 @@ public class MyUber {
 		
 		platform.chooseRideType(c1, "UberVan");
 		
+		platform.decideRequest(d1,true,c1);
 		
+		for (Ride r :platform.rides) {
+			System.out.println(r);
+		}
 	}
 
 }
