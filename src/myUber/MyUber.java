@@ -34,18 +34,39 @@ public class MyUber {
 			
 	}
 	
+	private double distance(ArrayList<Double> destination,ArrayList<Double> position) {
+		double x1=destination.get(0);
+		double x2=position.get(0);
+		double y1=destination.get(1);
+		double y2=position.get(1);
+		return(Math.sqrt(Math.pow(x1-x2,2)+Math.pow(y1-y2,2)));
+			
+	}
+	
 	public Driver search(Customer customer, String Ridetype){
 		Driver res = null;
 		for (int i=0;i<drivingDrivers.size();i++){
 			Car car=drivingDrivers.get(i).getCar();
 			if (((car.getRideType()==Ridetype) & (drivingDrivers.get(i).getState() == "on-duty") & ((res == null) || distance(customer,drivingDrivers.get(i))< distance(customer,res)))){
-
+				res = drivingDrivers.get(i);
 			}
 		}
 		return(res);
 			
 			
 		}
+	
+	public double[] getPrice(Customer customer,int trafficCondition) {
+		double[] cost= {};
+		String[] RideTypes= {"UberBlack","UberX","UberPool","UberVan"};
+		ArrayList<Double> destination= customer.getDestination();
+		ArrayList<Double> position= customer.getCoordinates();
+		double rideDistance = distance(destination,position);
+		for (String ridetype: RideTypes) {
+			cost.add(fare(ridetype,rideDistance,trafficCondition))
+		}
+		return (cost);
+	}
 
 	private void add(Driver driver) {
 		this.drivers.add(driver);
