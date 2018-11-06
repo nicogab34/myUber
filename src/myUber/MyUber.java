@@ -22,7 +22,7 @@ public class MyUber {
 	private void setDestination(Customer c,ArrayList<Double> destination){
 		c.setDestination(destination);
 		Request r =new Request(c, this);
-		r.setPrices(this.getPrice(c, "medium"));
+		r.setPrices(getPrice(c, "medium"));
 		c.setRequest(r);
 	}
 	
@@ -174,20 +174,19 @@ public class MyUber {
 		
 		
 		//Core
-		c1.setDestination(dest1);
-		/*platform.setDestination(c1,dest1);
+		
+		platform.setDestination(c1,dest1);
 		platform.chooseRideType(c1, "UberVan");
 		platform.setDestination(c2,dest2);
 		platform.chooseRideType(c1, "UberVan");
 		platform.chooseRideType(c2, "UberBlack");
 		platform.setDestination(c3,dest3);
-		platform.chooseRideType(c3, "UberVan");*/
+		platform.chooseRideType(c3, "UberVan");
 		
-		ArrayList<Double> a=getPrice(c1,"medium");
-		System.out.println("a="+a);
-		/*for (Ride r :platform.rides) {
+
+		for (Ride r :platform.rides) {
 			System.out.println(r);
-		}*/
+		}
 		
 		
 	}
