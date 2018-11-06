@@ -53,7 +53,12 @@ public class Driver extends Lock{
 	}
 	
 	public void takeCar(Car car) {
-		this.car = car;
+		if (car.getOwners().contains(this)) {
+			this.car = car;
+		}
+		else {
+			System.out.println("Meaningless command");
+		}
 	}
 	
 	public Car getCar() {

@@ -20,10 +20,15 @@ public abstract class Ride {
 	public void setState(String state) {
 		this.state = state;
 	}
-	
+	public Customer getCustomer() {
+		return customer;
+	}
+	public Driver getDriver() {
+		return driver;
+	}
 	public String toString() {
-		return "Customer : "+customer+"\n"+
-	"Driver : "+driver+"\n";
+		return "Customer : "+this.customer+"\n"+
+	"Driver : "+this.driver+"\n";
 	}
 	
 	
