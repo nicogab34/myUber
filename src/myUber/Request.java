@@ -3,10 +3,13 @@ package myUber;
 import java.util.ArrayList;
 
 public class Request{
-	Customer customer;
-	MyUber platform;
-	ArrayList<Double> prices;
-	String choice;
+	private Customer customer;
+	private MyUber platform;
+	private ArrayList<Double> prices;
+	private String choice;
+	private boolean state;
+	private int step;
+	
 	
 	public Request(Customer c, MyUber platform) {
 		super();
@@ -18,19 +21,31 @@ public class Request{
 		return prices;
 	}
 	public void setPrices(ArrayList<Double> prices) {
-		this.prices = prices;
+		if (this.step == 0) {
+			this.prices = prices;
+			this.step++;
+		}
+		else {
+			System.out.println("Meaningless command");
+		}
 	}
 	public String getChoice() {
 		return choice;
 	}
 	public void setChoice(String choice) {
-		this.choice = choice;
-		Driver driver = this.platform.search(this.customer, choice);
-		if (driver == null) {
-			this.customer.setRequest(null);
+		if (step == 1) {
+			this.choice = choice;
+			Driver driver = this.platform.search(this.customer, choice);
+			if (driver == null) {
+				this.customer.setRequest(null);
+			}
+			else {
+				driver.addRequest(this.customer);
+				this.step++;
+			}
 		}
 		else {
-			driver.addRequest(this.customer);
+			System.out.println("Meaningless command");
 		}
 	}
 

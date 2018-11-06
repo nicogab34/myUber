@@ -72,10 +72,6 @@ public class Driver extends Lock{
 	public void addRequest(Customer customer) {
 		this.requests.add(customer);
 	}
-	
-	public void decideRequest(boolean b,Customer c) {
-
-	}
 
 	public String toString() {
 		String carString;

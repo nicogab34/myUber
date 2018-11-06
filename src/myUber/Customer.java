@@ -86,7 +86,6 @@ public class Customer{
 	}
 	
 	public void chooseRideType(String rideType) {
-		System.out.println(this.request.getCustomer());
 		this.request.setChoice(rideType);
 	}
 	
