@@ -1,3 +1,4 @@
+
 package myUber;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class MyUber {
 		c.setRequest(r);
 	}
 	
-	private double distance(Customer customer,Driver driver) {
+	private static double distance(Customer customer,Driver driver) {
 		ArrayList<Double> positionCustomer=customer.getCoordinates();
 		ArrayList<Double> positionDriver=driver.getPosition();
 		double x1=positionCustomer.get(0);
@@ -36,7 +37,7 @@ public class MyUber {
 			
 	}
 	
-	private double distance(ArrayList<Double> destination,ArrayList<Double> position) {
+	private static double distance(ArrayList<Double> destination,ArrayList<Double> position) {
 		double x1=destination.get(0);
 		double x2=position.get(0);
 		double y1=destination.get(1);
@@ -59,12 +60,11 @@ public class MyUber {
 			
 		}
 	
-	public ArrayList<Double> getPrice(Customer customer,String trafficCondition) {
+	public static ArrayList<Double> getPrice(Customer customer,String trafficCondition) {
 		ArrayList<Double> cost= new ArrayList<Double>();
-		String[] RideTypes= {"UberBlack","UberX","UberPool","UberVan"};
+		String[] RideTypes= {"UberX","UberBlack","UberPool","UberVan"};
 		ArrayList<Double> destination= customer.getDestination();
 		ArrayList<Double> position= customer.getCoordinates();
-		System.out.println(destination+""+position);
 		double rideDistance = distance(destination,position);
 		for (String ridetype: RideTypes) {
 			FareCalculation fc = new FareCalculation();
@@ -174,17 +174,20 @@ public class MyUber {
 		
 		
 		//Core
-		platform.setDestination(c1,dest1);
+		c1.setDestination(dest1);
+		/*platform.setDestination(c1,dest1);
 		platform.chooseRideType(c1, "UberVan");
 		platform.setDestination(c2,dest2);
 		platform.chooseRideType(c1, "UberVan");
 		platform.chooseRideType(c2, "UberBlack");
 		platform.setDestination(c3,dest3);
-		platform.chooseRideType(c3, "UberVan");
+		platform.chooseRideType(c3, "UberVan");*/
 		
-		for (Ride r :platform.rides) {
+		ArrayList<Double> a=getPrice(c1,"medium");
+		System.out.println("a="+a);
+		/*for (Ride r :platform.rides) {
 			System.out.println(r);
-		}
+		}*/
 		
 		
 	}
