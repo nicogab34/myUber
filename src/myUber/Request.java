@@ -10,7 +10,6 @@ public class Request{
 	private boolean state;
 	private int step;
 	
-	
 	public Request(Customer c, MyUber platform) {
 		super();
 		this.customer=c;
@@ -33,7 +32,7 @@ public class Request{
 		return choice;
 	}
 	public void setChoice(String choice) {
-		if (step == 1) {
+		if ((step == 1) && (this.platform.getRideFactory().getRideTypes().contains(choice))){
 			this.choice = choice;
 			Driver driver = this.platform.search(this.customer, choice);
 			if (driver == null) {
@@ -41,8 +40,8 @@ public class Request{
 			}
 			else {
 				driver.addRequest(this.customer);
-				this.step++;
 			}
+			this.step++;
 		}
 		else {
 			System.out.println("Meaningless command");

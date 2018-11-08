@@ -105,9 +105,17 @@ public class MyUber {
 		d.setPosition(c.getDestination());
 		c.setCoordinates(c.getDestination());
 		c.setDestination(new  ArrayList<Double>());
-		
-		
 	}
+
+	public RideFactory getRideFactory() {
+		return rideFactory;
+	}
+
+
+	public void setRideFactory(RideFactory rideFactory) {
+		this.rideFactory = rideFactory;
+	}
+
 
 	public static void main(String[] args) {
 		

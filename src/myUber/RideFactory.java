@@ -1,6 +1,10 @@
 package myUber;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class RideFactory {
+	private ArrayList<String> rideTypes = new ArrayList<String>(Arrays.asList("UberX","UberPool","UberVan","UberBlack"));
 	
 	public Ride createRide(String Ridetype,Customer customer, Driver driver) {
 		
@@ -18,5 +22,10 @@ public class RideFactory {
 		}
 		return(null);
 	}
+
+	public ArrayList<String> getRideTypes() {
+		return rideTypes;
+	}
+	
 
 }
