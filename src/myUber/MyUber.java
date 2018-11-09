@@ -3,6 +3,8 @@ package myUber;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.GregorianCalendar;
+
 import Fare.*;
 
 public class MyUber {
@@ -106,6 +108,37 @@ public class MyUber {
 		c.setCoordinates(c.getDestination());
 		c.setDestination(new  ArrayList<Double>());
 	}
+	
+	public static String trafficState() {
+		java.util.GregorianCalendar calendar = new GregorianCalendar();
+		int heure = calendar.get(java.util.Calendar.HOUR_OF_DAY);
+		double a=Math.random();
+		if ((heure<7)&(heure>=22)) {
+			if (a<0.95) {return"low";}
+			if ((a>=0.95)&(a<0.99)) {return("medium");}
+			if (a>0.99) {return"heavy";}
+			
+		}
+		if ((heure>=7)&(heure<11)) {
+			if (a<0.05) {return"low";}
+			if ((a>=0.05)&(a<0.25)) {return("medium");}
+			if (a>0.25) {return"heavy";}
+			
+		}
+		if ((heure>=11)&(heure<17)) {
+			if (a<0.15) {return"low";}
+			if ((a>=0.85)&(a<0.99)) {return("medium");}
+			if (a>0.85) {return"heavy";}
+			
+		}
+		if ((heure>=17)&(heure<22)) {
+			if (a<0.01) {return"low";}
+			if ((a>=0.05)&(a<0.95)) {return("medium");}
+			if (a>0.95) {return"heavy";}
+			
+		}
+		return(null);
+	}
 
 	public RideFactory getRideFactory() {
 		return rideFactory;
@@ -196,6 +229,7 @@ public class MyUber {
 			System.out.println(r);
 		}
 		
+
 		
 	}
 
