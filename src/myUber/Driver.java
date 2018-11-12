@@ -12,6 +12,8 @@ public class Driver extends Lock{
 	private Car car;
 	private ArrayList<Double> position;
 	private ArrayList<Customer> requests = new ArrayList<Customer>();
+	private double numberOfRides=0;
+	private double MoneyCashed=0;
 	private static int nextID = 1;
 
 	public Driver(String name, String surname, String state,ArrayList<Double> position) {
@@ -23,6 +25,25 @@ public class Driver extends Lock{
 		nextID++;
 		this.position=position;
 	}
+		
+
+	public double getNumberOfRides() {
+		return numberOfRides;
+	}
+
+	public void setNumberOfRides(double numberOfRides) {
+		this.numberOfRides = numberOfRides;
+	}
+	
+	public double getMoneyCashed() {
+		return MoneyCashed;
+	}
+
+
+	public void setMoneyCashed(double moneyCashed) {
+		MoneyCashed = moneyCashed;
+	}
+
 
 	public int getID() {
 		return ID;

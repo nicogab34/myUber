@@ -74,7 +74,16 @@ public class MyUber {
 		}
 		return (cost);
 	}
-
+	
+	public static double getPrice(Customer customer, String trafficCondition,String RideType) {
+		ArrayList<Double> cost=getPrice(customer,trafficCondition);
+		if(RideType=="UberX") {return(cost.get(0));}
+		if(RideType=="UberBlack") {return(cost.get(1));}
+		if(RideType=="UberPool") {return(cost.get(2));}
+		if(RideType=="UberVan") {return(cost.get(3));}
+		return(0);
+	}
+	
 	private void add(Driver driver) {
 		this.drivers.add(driver);
 	}
@@ -103,10 +112,17 @@ public class MyUber {
 	private void completeRide(Ride r) {
 		Driver d = r.getDriver();
 		Customer c = r.getCustomer();
+		double speed=getSpeed();
+		double distance=distance(c.getDestination(),c.getCoordinates());
+		r.setRideDuration(distance/speed);
+		c.setTotalTime(c.getTotalTime()+r.getRideDuration());
 		d.setState("on-duty");
+		/* utiliser les threads pour attendre le temps rideDuration avant de continuer le code?*/
 		d.setPosition(c.getDestination());
 		c.setCoordinates(c.getDestination());
 		c.setDestination(new  ArrayList<Double>());
+		c.setNumberOfRides(c.getNumberOfRides()+1);
+		d.setNumberOfRides(d.getNumberOfRides()+1);
 	}
 	
 	public static String trafficState() {
@@ -139,6 +155,15 @@ public class MyUber {
 		}
 		return(null);
 	}
+	
+	public static double getSpeed() {
+		String traffic=trafficState();
+		double speed=0;
+		if (traffic=="low") {speed=15;}
+		if(traffic=="medium") {speed=7.5;}
+		if (traffic=="heavy") {speed=3;}
+		return (speed);
+	}
 
 	public RideFactory getRideFactory() {
 		return rideFactory;
@@ -147,6 +172,27 @@ public class MyUber {
 
 	public void setRideFactory(RideFactory rideFactory) {
 		this.rideFactory = rideFactory;
+	}
+	
+	public ArrayList<Double> CustomerBalance(Customer c){
+		ArrayList<Double> balance=new ArrayList<Double>();
+		balance.add(c.getNumberOfRides());
+		balance.add(c.getTotalTime());
+		balance.add(c.getTotalCharge());
+		return(balance);
+	}
+	
+	public ArrayList<Double> SystemBalance() {
+		double totalride=0;
+		double totalcost=0;
+		ArrayList<Double> balance=new ArrayList<Double>();
+		for (Driver d:drivingDrivers) {
+			totalride=totalride+d.getNumberOfRides();
+			totalcost=totalcost+d.getMoneyCashed();
+		}
+		balance.add(totalride);
+		balance.add(totalcost);
+		return(balance);
 	}
 
 

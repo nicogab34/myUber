@@ -6,6 +6,7 @@ public abstract class Ride {
 	private int ID;
 	private Driver driver;
 	private static int nextID;
+	private double rideDuration;
 	public Ride(String state, Customer customer, Driver driver) {
 		super();
 		this.state = state;
@@ -14,6 +15,15 @@ public abstract class Ride {
 		this.driver = driver;
 		nextID++;
 	}
+	
+	public double getRideDuration() {
+		return rideDuration;
+	}
+
+	public void setRideDuration(double rideDuration) {
+		this.rideDuration = rideDuration;
+	}
+
 	public String getState() {
 		return state;
 	}

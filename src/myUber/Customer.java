@@ -10,6 +10,9 @@ public class Customer{
 	private int creditCardNumber;
 	private Request request ;
 	private ArrayList<Double> destination = new  ArrayList<Double>();
+	private double numberOfRides=0;
+	private double totalTime=0;
+	private double totalCharge=0;
 	
 	private static int nextID = 1;
 
@@ -21,6 +24,35 @@ public class Customer{
 		this.creditCardNumber = creditCardNumber;
 		this.ID = nextID;
 		nextID++;
+	}
+	
+
+	public double getTotalTime() {
+		return totalTime;
+	}
+
+
+	public void setTotalTime(double totalTime) {
+		this.totalTime = totalTime;
+	}
+
+
+	public double getTotalCharge() {
+		return totalCharge;
+	}
+
+
+	public void setTotalCharge(double totalCharge) {
+		this.totalCharge = totalCharge;
+	}
+
+
+	public double getNumberOfRides() {
+		return numberOfRides;
+	}
+
+	public void setNumberOfRides(double numberOfRides) {
+		this.numberOfRides = numberOfRides;
 	}
 
 	public int getID() {
