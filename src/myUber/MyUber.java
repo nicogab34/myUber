@@ -39,7 +39,7 @@ public class MyUber {
 			
 	}
 	
-	private static double distance(ArrayList<Double> destination,ArrayList<Double> position) {
+	public static double distance(ArrayList<Double> destination,ArrayList<Double> position) {
 		double x1=destination.get(0);
 		double x2=position.get(0);
 		double y1=destination.get(1);
@@ -89,8 +89,10 @@ public class MyUber {
 	}
 	
 	private void takeCar(Driver driver, Car car) {
-		driver.takeCar(car);
-		this.drivingDrivers.add(driver);
+		if (car.getOwners().contains(driver)) {
+			driver.takeCar(car);
+			this.drivingDrivers.add(driver);
+		}
 	}
 	
 	private void chooseRideType(Customer c, String rideType) {
@@ -256,9 +258,6 @@ public class MyUber {
 		ArrayList<Double> dest5 = new ArrayList<Double>(Arrays.asList(5.0, 1.0));
 		ArrayList<Double> dest6 = new ArrayList<Double>(Arrays.asList(2.0, 1.7));
 		ArrayList<Double> dest7 = new ArrayList<Double>(Arrays.asList(3.0, 32.0));
-		
-		
-		
 		
 		//Core
 		

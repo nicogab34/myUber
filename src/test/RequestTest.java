@@ -1,4 +1,4 @@
-package myUber;
+package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
+
+import myUber.CarFactory;
+import myUber.Customer;
+import myUber.MyUber;
+import myUber.Request;
+import myUber.RideFactory;
 
 class RequestTest {
 
