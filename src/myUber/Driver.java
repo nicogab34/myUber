@@ -14,6 +14,10 @@ public class Driver extends Lock{
 	private ArrayList<Customer> requests = new ArrayList<Customer>();
 	private double numberOfRides=0;
 	private double MoneyCashed=0;
+	private double TimeOnDuty=0;
+	private double TimeOnRide=0;
+	private double TimeOffDuty=0;
+	private double TimeVar=0;
 	private static int nextID = 1;
 
 	public Driver(String name, String surname, String state,ArrayList<Double> position) {
@@ -26,6 +30,26 @@ public class Driver extends Lock{
 		this.position=position;
 	}
 		
+
+	public double getTimeOnDuty() {
+		return TimeOnDuty;
+	}
+
+
+	public void setTimeOnDuty(double timeOnDuty) {
+		TimeOnDuty = timeOnDuty;
+	}
+
+
+	public double getTimeDrvAround() {
+		return TimeOnRide;
+	}
+
+
+	public void setTimeDrvAround(double timeDrvAround) {
+		TimeOnRide = timeDrvAround;
+	}
+
 
 	public double getNumberOfRides() {
 		return numberOfRides;
@@ -70,7 +94,20 @@ public class Driver extends Lock{
 	}
 
 	public void setState(String state) {
-		this.state = state;
+		double t1=this.TimeVar;
+		double t2=System.currentTimeMillis();
+		double delta=t2-t1;
+		this.TimeVar=t2;
+		if(this.state=="on-duty"){
+			this.TimeOnDuty=this.TimeOnDuty+delta;
+		}
+		if(this.state=="on-a-ride") {
+			this.TimeOnRide=this.TimeOnRide+delta;
+		}
+		if(this.state=="off-duty") {
+			this.TimeOffDuty=this.TimeOffDuty+delta;
+		}
+		this.state = state; 
 	}
 	
 	public void takeCar(Car car) {
@@ -113,6 +150,16 @@ public class Driver extends Lock{
 	"Surname : "+this.surname+"\n"+
 	"State : "+this.state+"\n"+
 	"Car : "+carString+"\n";
+	}
+	
+	public double onDutyRate() {
+		return(this.TimeOnDuty/this.TimeOnRide);
+	}
+	
+	public double ActivityRate() {
+		double t1=this.TimeOnDuty+this.TimeOnRide;
+		double t2=t1+this.TimeOffDuty;
+		return(t1/t2);
 	}
 
 }

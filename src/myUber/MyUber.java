@@ -10,6 +10,7 @@ import Fare.*;
 public class MyUber {
 	private ArrayList<Driver> drivers = new ArrayList<Driver>();
 	private ArrayList<Driver> drivingDrivers = new ArrayList<Driver>();
+	private ArrayList<Customer> Customers= new ArrayList<Customer>();
 	private ArrayList<Ride> rides = new ArrayList<Ride>();
 	private RideFactory rideFactory;
 	private CarFactory carFactory;
@@ -88,6 +89,10 @@ public class MyUber {
 		this.drivers.add(driver);
 	}
 	
+	private void add(Customer customer) {
+		this.Customers.add(customer);
+	}
+	
 	private void takeCar(Driver driver, Car car) {
 		driver.takeCar(car);
 		this.drivingDrivers.add(driver);
@@ -110,19 +115,34 @@ public class MyUber {
 	}
 	
 	private void completeRide(Ride r) {
+		String trafficstate=trafficState();
 		Driver d = r.getDriver();
 		Customer c = r.getCustomer();
-		double speed=getSpeed();
+		double cost=0;
+		double speed=getSpeed(trafficstate);
 		double distance=distance(c.getDestination(),c.getCoordinates());
 		r.setRideDuration(distance/speed);
 		c.setTotalTime(c.getTotalTime()+r.getRideDuration());
 		d.setState("on-duty");
-		/* utiliser les threads pour attendre le temps rideDuration avant de continuer le code?*/
 		d.setPosition(c.getDestination());
 		c.setCoordinates(c.getDestination());
 		c.setDestination(new  ArrayList<Double>());
 		c.setNumberOfRides(c.getNumberOfRides()+1);
 		d.setNumberOfRides(d.getNumberOfRides()+1);
+		if (r instanceof UberX){
+			cost= getPrice(c,trafficstate,"UberX");
+		}
+		if (r instanceof UberBlack){
+			cost= getPrice(c,trafficstate,"UberBlack");			
+		}
+		if (r instanceof UberPool){
+			cost= getPrice(c,trafficstate,"UberPool");
+		}
+		if (r instanceof UberVan){
+			cost= getPrice(c,trafficstate,"UberVan");
+		}
+		c.setTotalCharge(c.getTotalCharge()+cost);
+		d.setMoneyCashed(d.getMoneyCashed()+cost);
 	}
 	
 	public static String trafficState() {
@@ -156,12 +176,11 @@ public class MyUber {
 		return(null);
 	}
 	
-	public static double getSpeed() {
-		String traffic=trafficState();
+	public static double getSpeed(String trafficstate) {
 		double speed=0;
-		if (traffic=="low") {speed=15;}
-		if(traffic=="medium") {speed=7.5;}
-		if (traffic=="heavy") {speed=3;}
+		if (trafficstate=="low") {speed=15;}
+		if(trafficstate=="medium") {speed=7.5;}
+		if (trafficstate=="heavy") {speed=3;}
 		return (speed);
 	}
 
@@ -194,6 +213,14 @@ public class MyUber {
 		balance.add(totalcost);
 		return(balance);
 	}
+	
+	/*public ArrayList<Customer> FrequencySortingCustomer(){
+		double m=CustomerBalance(c).get(0);
+		for(Customer c:Customers) {
+			
+			
+		}
+	}*/
 
 
 	public static void main(String[] args) {
@@ -239,6 +266,14 @@ public class MyUber {
 		platform.add(d5);
 		platform.add(d6);
 		platform.add(d7);
+		
+		platform.add(c1);
+		platform.add(c2);
+		platform.add(c3);
+		platform.add(c4);
+		platform.add(c5);
+		platform.add(c6);
+		platform.add(c7);
 
 		platform.takeCar(d1, v1);
 		platform.takeCar(d2, v2);
