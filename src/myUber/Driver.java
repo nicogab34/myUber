@@ -20,6 +20,14 @@ public class Driver extends Lock{
 	private double TimeVar=0;
 	private static int nextID = 1;
 
+	/**
+	 * 
+	 * @param name
+	 * @param surname
+	 * @param state
+	 * @param position
+	 * Creates a new driver
+	 */
 	public Driver(String name, String surname, String state,ArrayList<Double> position) {
 		super();
 		this.name = name;
@@ -30,7 +38,9 @@ public class Driver extends Lock{
 		this.position=position;
 	}
 		
-
+	/**
+	 * @return the time spent in state "on-duty"
+	 */
 	public double getTimeOnDuty() {
 		return TimeOnDuty;
 	}

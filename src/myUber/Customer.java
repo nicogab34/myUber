@@ -16,6 +16,13 @@ public class Customer{
 	
 	private static int nextID = 1;
 
+	/**
+	 * @param name
+	 * @param surname
+	 * @param coordinates
+	 * @param creditCardNumber
+	 * Creates a new Customer
+	 */
 	public Customer(String name, String surname, ArrayList<Double> coordinates, int creditCardNumber) {
 		super();
 		this.name = name;
@@ -26,7 +33,6 @@ public class Customer{
 		nextID++;
 	}
 	
-
 	public double getTotalTime() {
 		return totalTime;
 	}
@@ -55,68 +61,107 @@ public class Customer{
 		this.numberOfRides = numberOfRides;
 	}
 
+	/**
+	 * @return the ID of the customer
+	 */
 	public int getID() {
 		return ID;
 	}
 
+	/**
+	 * @return the name of the customer
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @param name
+	 * Sets the name of the customer
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * @return the surname of the customer
+	 */
 	public String getSurname() {
 		return surname;
 	}
 
+	/**
+	 * @param surname
+	 * Sets the surname of the customer
+	 */
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
 
+	/**
+	 * @return the coordinates of the customer
+	 */
 	public ArrayList<Double> getCoordinates() {
 		return coordinates;
 	}
 
+	/**
+	 * @param coordinates
+	 * Sets the customer's coordinate
+	 */
 	public void setCoordinates(ArrayList<Double> coordinates) {
 		this.coordinates = coordinates;
 	}
 
+	/**
+	 * @return the credit card number of the customer
+	 */
 	public int getCreditCardNumber() {
 		return creditCardNumber;
 	}
 
+	/**
+	 * @param creditCardNumber
+	 * Sets the credit card number of the customer
+	 */
 	public void setCreditCardNumber(int creditCardNumber) {
 		this.creditCardNumber = creditCardNumber;
 	}
 
+	/**
+	 * @return the running request of the customer
+	 */
 	public Request getRequest() {
 		return request;
 	}
 
+	/**
+	 * @param request
+	 * Sets the running request of the customer
+	 */
 	public void setRequest(Request request) {
 		this.request = request;
 	}
 
+	/**
+	 * @return the destination of the customer
+	 */
 	public ArrayList<Double> getDestination() {
 		return destination;
 	}
 
+	/**
+	 * @param destination
+	 * Sets the destination of the customer
+	 */
 	public void setDestination(ArrayList<Double> destination) {
 		this.destination = destination;
 	}
 	
-	public void answer(String chosenRideType,Request request) {
-		request.setChoice(chosenRideType);
-	}
-	
-	public void notify(ArrayList<Double> prices, ArrayList<String> rideTypes) {
-		for (int i=0;i<prices.size(); i++) {
-			System.out.println(rideTypes.get(i)+" : "+prices.get(i));
-		}
-	}
-	
+	/**
+	 * @param rideType
+	 * Sets the ride type of the request
+	 */
 	public void chooseRideType(String rideType) {
 		this.request.setChoice(rideType);
 	}

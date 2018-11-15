@@ -8,6 +8,10 @@ public class Berline extends Car{
 	
 	private static int nextID = 1;
 
+	/**
+	 * @param owners
+	 * Creates a new car of type Berline
+	 */
 	public Berline(ArrayList<Driver> owners) {
 		super(seats, "Berline"+nextID, owners, rideType);
 		nextID++;

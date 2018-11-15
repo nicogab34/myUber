@@ -15,19 +15,32 @@ public class MyUber {
 	private RideFactory rideFactory;
 	private CarFactory carFactory;
 	
+	/**
+	 * @param rideFactory
+	 * @param carFactory
+	 * Creates the Uber platform
+	 */
 	public MyUber(RideFactory rideFactory, CarFactory carFactory) {
 		super();
 		this.rideFactory = rideFactory;
 		this.carFactory = carFactory;
 	}
 	
-	
+	/**
+	 * @param c
+	 * @param destination
+	 * Sets customer destination
+	 * Creates a new request
+	 * Sets prices
+	 * Add the request to the customer
+	 */
 	private void setDestination(Customer c,ArrayList<Double> destination){
 		c.setDestination(destination);
 		Request r =new Request(c, this);
 		r.setPrices(getPrice(c, "medium"));
 		c.setRequest(r);
 	}
+	
 	
 	private static double distance(Customer customer,Driver driver) {
 		ArrayList<Double> positionCustomer=customer.getCoordinates();
@@ -85,14 +98,27 @@ public class MyUber {
 		return(0);
 	}
 	
+	/**
+	 * @param driver
+	 * Adds a new driver to the platform
+	 */
 	private void add(Driver driver) {
 		this.drivers.add(driver);
 	}
 	
+	/**
+	 * @param customer
+	 * Adds a customer to the platform
+	 */
 	private void add(Customer customer) {
 		this.Customers.add(customer);
 	}
 	
+	/**
+	 * @param driver
+	 * @param car
+	 * If the driver is one of the car owners : the driver starts driving the car
+	 */
 	private void takeCar(Driver driver, Car car) {
 		if (car.getOwners().contains(driver)) {
 			driver.takeCar(car);
@@ -100,10 +126,21 @@ public class MyUber {
 		}
 	}
 	
+	/**
+	 * @param c
+	 * @param rideType
+	 * Sets the customer ride type decision
+	 */
 	private void chooseRideType(Customer c, String rideType) {
 		c.chooseRideType(rideType);
 	}
 	
+	/**
+	 * @param driver
+	 * @param b
+	 * @param customer
+	 * Sets the driver decision for the request of the customer
+	 */
 	private void decideRequest(Driver driver, boolean b, Customer customer) {
 		if (!b) {
 			customer.setRequest(null);
@@ -115,6 +152,7 @@ public class MyUber {
 			this.completeRide(r);
 		}
 	}
+	
 	
 	private void completeRide(Ride r) {
 		String trafficstate=trafficState();
@@ -186,11 +224,17 @@ public class MyUber {
 		return (speed);
 	}
 
+	/**
+	 * @return the ride factory
+	 */
 	public RideFactory getRideFactory() {
 		return rideFactory;
 	}
 
-
+	/**
+	 * @param rideFactory
+	 * Sets the platform ride factory
+	 */
 	public void setRideFactory(RideFactory rideFactory) {
 		this.rideFactory = rideFactory;
 	}
