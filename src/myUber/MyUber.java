@@ -14,6 +14,7 @@ public class MyUber {
 	private ArrayList<Ride> rides = new ArrayList<Ride>();
 	private RideFactory rideFactory;
 	private CarFactory carFactory;
+	private ArrayList<Customer> poolRequests = new ArrayList<Customer>();
 	
 	/**
 	 * @param rideFactory
@@ -132,7 +133,19 @@ public class MyUber {
 	 * Sets the customer ride type decision
 	 */
 	private void chooseRideType(Customer c, String rideType) {
-		c.chooseRideType(rideType);
+		if (rideType == "UberPool") {
+			this.poolRequests.add(c);
+			if (this.poolRequests.size()==3) {
+				this.startRide();
+			}
+		}
+		else {
+			c.chooseRideType(rideType);
+		}
+	}
+	
+	private void startRide() {
+		
 	}
 	
 	/**
