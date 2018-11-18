@@ -18,7 +18,7 @@ public class Driver extends Lock{
 	private double TimeOnRide=0;
 	private double TimeOffDuty=0;
 	private double TimeVar=0;
-	private ArrayList<Double> AppreciationRate;
+	private ArrayList<Double> AppreciationRate = new ArrayList<Double>();
 	private static int nextID = 1;
 
 	/**

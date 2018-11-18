@@ -182,8 +182,95 @@ public class MyUber{
 	}
 	
 	private void startRide() {
+		System.out.println("UberPool ride started");
+		for (Driver d : this.uberPoolDrivers()) {
+			completePoolRide(this.poolRequests, d);
+			this.poolRequests = new ArrayList<Customer>();
+			return;
+		}
+	}
+	
+	private void completePoolRide(ArrayList<Customer> customers, Driver d) {
 		
 	}
+	
+	private ArrayList<Driver> uberPoolDrivers() {
+		ArrayList<Driver> uberPoolDrivers= new ArrayList<Driver>();
+		ArrayList<Double> costs= new ArrayList<Double>();
+		for (int i=0;i<this.drivingDrivers.size();i++) {
+			if (this.drivingDrivers.get(i).getState() == "on-duty" && this.drivingDrivers.get(i).getCar().getRideType() == "UberPool") {
+				if (uberPoolDrivers.size() == 0){
+					uberPoolDrivers.add(this.drivingDrivers.get(i));
+					costs.add(uberPoolCost(this.drivingDrivers.get(i)));
+				}
+				else {
+					if (uberPoolCost(this.drivingDrivers.get(i)) > costs.get(costs.size()-1)) {
+						uberPoolDrivers.add(this.drivingDrivers.get(i));
+						costs.add(uberPoolCost(this.drivingDrivers.get(i)));
+					}
+					else {
+						int size = uberPoolDrivers.size();
+						for (int j=0;j<size;j++) {
+							if (uberPoolCost(this.drivingDrivers.get(i)) <= costs.get(j)) {
+								uberPoolDrivers.add(j, this.drivingDrivers.get(i));
+								costs.add(j, uberPoolCost(this.drivingDrivers.get(i)));
+							}
+						}
+					}
+				}
+			}
+		}
+		return uberPoolDrivers;
+	}
+	
+	private double uberPoolCost(Driver driver) {
+		double cost = -1;
+		ArrayList<ArrayList<Double>> globalOrderPos = new ArrayList<ArrayList<Double>>();
+		ArrayList<ArrayList<Double>> globalOrderDest = new ArrayList<ArrayList<Double>>();
+		int N = (int) Math.pow(factorial(this.poolRequests.size()),2);
+		for (int i=0;i<N;i++) {
+			int n = i;
+			ArrayList<ArrayList<Double>> pos = new ArrayList<ArrayList<Double>>();
+			ArrayList<ArrayList<Double>> dest = new ArrayList<ArrayList<Double>>();
+			for (int j=0; j<this.poolRequests.size();j++) {
+				pos.add(this.poolRequests.get(j).getCoordinates());
+				dest.add(this.poolRequests.get(j).getDestination());
+			}
+			ArrayList<ArrayList<Double>> orderDest = new ArrayList<ArrayList<Double>>();
+			ArrayList<ArrayList<Double>> orderPos = new ArrayList<ArrayList<Double>>();
+			int q = N;
+			for (int j=0;j<this.poolRequests.size();j++) {
+				q = q/(this.poolRequests.size()-j);
+				orderPos.add(pos.remove(n/q));
+				n = n%q;
+			}
+			for (int j=0;j<this.poolRequests.size();j++) {
+				q = q/(this.poolRequests.size()-j);
+				orderDest.add(dest.remove(n/q));
+				n = n%q;
+			}
+			double auxCost = this.distance(driver.getPosition(), orderPos.get(0)) + this.distance(orderPos.get(this.poolRequests.size()-1), orderDest.get(0));
+			for (int j=0; j<this.poolRequests.size()-1;j++) {
+				auxCost += (this.distance(orderPos.get(j), orderPos.get(j+1))+this.distance(orderDest.get(j), orderDest.get(j+1)));
+			}
+			if (cost == -1 || auxCost < cost) {
+				cost = auxCost;
+				globalOrderPos = orderPos;
+				globalOrderDest = orderDest;
+			}
+		}
+		return cost;
+	}
+	
+	private int factorial(int n) {
+		if (n<2) {
+			return 1;
+		}
+		else {
+			return n*factorial(n-1);
+		}
+	}
+	
 	
 	/**
 	 * @param driver
@@ -238,7 +325,7 @@ public class MyUber{
 		d.setNumberOfRides(d.getNumberOfRides()+1);
 		c.setTotalCharge(c.getTotalCharge()+cost);
 		d.setMoneyCashed(d.getMoneyCashed()+cost);
-		System.out.println("voulez vous donner une note au chauffeur? y/n");
+		/*System.out.println("voulez vous donner une note au chauffeur? y/n");
 		Scanner scan= new Scanner(System.in);
 		String text=scan.nextLine();
 		if (text=="y") {
@@ -246,7 +333,7 @@ public class MyUber{
 			float note=scan.nextFloat();
 			d.setAppreciationRate(note);
 		}
-		scan.close();
+		scan.close();*/
 	}
 	
 	/**
@@ -411,14 +498,23 @@ public class MyUber{
 		Driver d5 = new Driver("Neil", "Armstrong", "on-duty",new ArrayList<Double>(Arrays.asList(100.,60.)));
 		Driver d6 = new Driver("Chofeur", "Cithechampillon", "on-duty",new ArrayList<Double>(Arrays.asList(4.0,6.2)));
 		Driver d7 = new Driver("Sep", "Arti", "on-duty",new ArrayList<Double>(Arrays.asList(-5.,1.)));
+		Driver d8 = new Driver("d", "8", "on-duty",new ArrayList<Double>(Arrays.asList(0.,1.)));
+		Driver d9 = new Driver("d", "9", "on-duty",new ArrayList<Double>(Arrays.asList(-5.,1.6)));
+		Driver d10 = new Driver("d", "10", "on-duty",new ArrayList<Double>(Arrays.asList(-5.,12.)));
+		Driver d11 = new Driver("Sdep", "11", "on-duty",new ArrayList<Double>(Arrays.asList(6.,2.3)));
+		
 		
 		Car v1 = platform.carFactory.createCar("Van", new ArrayList<Driver>(Arrays.asList(d1,d2)),"");
 		Car v2 = platform.carFactory.createCar("Van", new ArrayList<Driver>(Arrays.asList(d1,d2)),"");
 		Car v3 = platform.carFactory.createCar("Van", new ArrayList<Driver>(Arrays.asList(d1,d2, d3, d4)),"");
-		Car s1 = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d3)), "");
-		Car s2 = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d4,d5)), "");
-		Car s3 = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d5,d6,d7)), "");
-		Car s4 = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d6)), "");
+		Car s1 = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d3)), "UberX");
+		Car s2 = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d4,d5)), "UberX");
+		Car s3 = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d5,d6,d7)), "UberX");
+		Car s4 = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d6)), "UberX");
+		Car s5 = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d8)), "UberPool");
+		Car s6 = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d9)), "UberPool");
+		Car s7 = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d10)), "UberPool");
+		Car s8 = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d11)), "UberPool");
 		Car b1 = platform.carFactory.createCar("Berline", new ArrayList<Driver>(Arrays.asList(d7)),"");
 		Car b2 = platform.carFactory.createCar("Berline", new ArrayList<Driver>(Arrays.asList(d3)),"");
 		Car b3 = platform.carFactory.createCar("Berline", new ArrayList<Driver>(Arrays.asList(d1,d7)),"");
@@ -439,6 +535,10 @@ public class MyUber{
 		platform.add(d5);
 		platform.add(d6);
 		platform.add(d7);
+		platform.add(d8);
+		platform.add(d9);
+		platform.add(d10);
+		platform.add(d11);
 		
 		platform.add(c1);
 		platform.add(c2);
@@ -455,6 +555,10 @@ public class MyUber{
 		platform.takeCar(d5, s3);
 		platform.takeCar(d6, s4);
 		platform.takeCar(d7, b3);
+		platform.takeCar(d8, s5);
+		platform.takeCar(d9, s6);
+		platform.takeCar(d10, s7);
+		platform.takeCar(d11, s8);
 		
 		//Destinations
 		ArrayList<Double> dest1 = new ArrayList<Double>(Arrays.asList(3.5, 2.7));
@@ -467,19 +571,21 @@ public class MyUber{
 		
 		//Core
 		
-		platform.setDestination(c1,dest1);
+		/* platform.setDestination(c1,dest1);
 		platform.chooseRideType(c1, "UberVan");
 		platform.setDestination(c2,dest2);
 		platform.chooseRideType(c1, "UberVan");
 		platform.chooseRideType(c2, "UberBlack");
 		platform.setDestination(c3,dest3);
-		platform.chooseRideType(c3, "UberVan");
+		platform.chooseRideType(c3, "UberVan"); */
 		
-
-		for (Ride r :platform.rides) {
-			System.out.println(r);
-		}
-
+		
+		platform.setDestination(c1,dest6);
+		platform.chooseRideType(c1, "UberPool");
+		platform.setDestination(c2,dest7);
+		platform.chooseRideType(c2, "UberPool");
+		platform.setDestination(c3,dest3);
+		platform.chooseRideType(c3, "UberPool");
 		
 	}
 
