@@ -18,6 +18,7 @@ public class Driver extends Lock{
 	private double TimeOnRide=0;
 	private double TimeOffDuty=0;
 	private double TimeVar=0;
+	private ArrayList<Double> AppreciationRate;
 	private static int nextID = 1;
 
 	/**
@@ -36,6 +37,8 @@ public class Driver extends Lock{
 		this.ID = nextID;
 		nextID++;
 		this.position=position;
+		this.AppreciationRate.add(5.);
+		this.AppreciationRate.add(0.);
 	}
 		
 	/**
@@ -171,5 +174,17 @@ public class Driver extends Lock{
 		double t2=t1+this.TimeOffDuty;
 		return(t1/t2);
 	}
+
+	public double getAppreciationRate() {
+		return AppreciationRate.get(0);
+	}
+
+	public void setAppreciationRate(double Rate) {
+		double n=this.AppreciationRate.get(1);
+		double m=(Rate+n*AppreciationRate.get(0))/(n+1);
+		AppreciationRate.set(0, m);
+		AppreciationRate.set(1,n+1);
+	}
+	
 
 }

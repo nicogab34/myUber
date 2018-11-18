@@ -12,7 +12,14 @@ public class FareCalculation implements FareType{
 	public FareCalculation() {
 		super();
 	}
-
+	
+	/**
+	 * @param rideType
+	 * @param rideDistance
+	 * @param trafficConditon
+	 * @return
+	 * Depending on the type of ride (X,Black,Van, Pool), traffic state and the distance of the ride, this function returns the price of the ride
+	 */
 	@Override
 	public double fare(String rideType, double rideDistance, String trafficCondition) {
 		// TODO Auto-generated method stub
@@ -74,7 +81,13 @@ public class FareCalculation implements FareType{
 		return cost;
 	}
 	
-	
+	/**
+	 * @param UberX
+	 * @param rideDistance
+	 * @param trafficConditon
+	 * @return
+	 * Depending traffic state and the distance of the ride, this function returns the price of an UberX ride
+	 */
 	@Override
 	public double fare(UberX UberX, double rideDistance, String trafficCondition) {
 		// TODO Auto-generated method stub
@@ -95,6 +108,13 @@ public class FareCalculation implements FareType{
 		return cost;
 	}
 
+	/**
+	 * @param UberVan
+	 * @param rideDistance
+	 * @param trafficConditon
+	 * @return
+	 * Depending traffic state and the distance of the ride, this function returns the price of an UberVan ride
+	 */
 	@Override
 	public double fare(UberVan UberVan, double rideDistance, String trafficCondition) {
 		// TODO Auto-generated method stub
@@ -115,6 +135,13 @@ public class FareCalculation implements FareType{
 		return cost;
 	}
 
+	/**
+	 * @param UberPool
+	 * @param rideDistance
+	 * @param trafficConditon
+	 * @return
+	 * Depending traffic state and the distance of the ride, this function returns the price of an UberPool ride
+	 */
 	@Override
 	public double fare(UberPool UberPool, double rideDistance, String trafficCondition) {
 		// TODO Auto-generated method stub
@@ -135,6 +162,13 @@ public class FareCalculation implements FareType{
 		return cost;
 	}
 
+	/**
+	 * @param UberBlack
+	 * @param rideDistance
+	 * @param trafficConditon
+	 * @return
+	 * Depending traffic state and the distance of the ride, this function returns the price of an UberBlack ride
+	 */
 	@Override
 	public double fare(UberBlack UberBlack, double rideDistance, String trafficCondition) {
 		// TODO Auto-generated method stub

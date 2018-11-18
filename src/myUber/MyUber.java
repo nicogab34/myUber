@@ -3,11 +3,13 @@ package myUber;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.Scanner;
 
 import Fare.*;
 
-public class MyUber {
+public class MyUber{
 	private ArrayList<Driver> drivers = new ArrayList<Driver>();
 	private ArrayList<Driver> drivingDrivers = new ArrayList<Driver>();
 	private ArrayList<Customer> Customers= new ArrayList<Customer>();
@@ -42,7 +44,13 @@ public class MyUber {
 		c.setRequest(r);
 	}
 	
-	
+	/**
+	 *
+	 * @param customer
+	 * @param driver
+	 * @return double
+	 * Calculate the distance betwenn a customer and a driver
+	 */
 	private static double distance(Customer customer,Driver driver) {
 		ArrayList<Double> positionCustomer=customer.getCoordinates();
 		ArrayList<Double> positionDriver=driver.getPosition();
@@ -54,6 +62,13 @@ public class MyUber {
 			
 	}
 	
+	/**
+	 * 
+	 * @param destination
+	 * @param position
+	 * @return double
+	 * Calculate the distance between two points of the map
+	 */
 	public static double distance(ArrayList<Double> destination,ArrayList<Double> position) {
 		double x1=destination.get(0);
 		double x2=position.get(0);
@@ -63,6 +78,13 @@ public class MyUber {
 			
 	}
 	
+	/**
+	 * 
+	 * @param customer
+	 * @param Ridetype
+	 * @return void
+	 * Find the nearest driver from a given customer
+	 */
 	public Driver search(Customer customer, String Ridetype){
 		Driver res = null;
 		for (int i=0;i<drivingDrivers.size();i++){
@@ -77,6 +99,13 @@ public class MyUber {
 			
 		}
 	
+	/**
+	 * 
+	 * @param customer
+	 * @param trafficCondition
+	 * @return
+	 * Calculate the prices of the different rides possible(X,Black,Pool,Van) with given traffic state
+	 */
 	public static ArrayList<Double> getPrice(Customer customer,String trafficCondition) {
 		ArrayList<Double> cost= new ArrayList<Double>();
 		String[] RideTypes= {"UberX","UberBlack","UberPool","UberVan"};
@@ -90,6 +119,14 @@ public class MyUber {
 		return (cost);
 	}
 	
+	/**
+	 * 
+	 * @param customer
+	 * @param trafficCondition
+	 * @param RideType
+	 * @return double
+	 * Calculate the price of a ride with given ridetype and given traffic state
+	 */
 	public static double getPrice(Customer customer, String trafficCondition,String RideType) {
 		ArrayList<Double> cost=getPrice(customer,trafficCondition);
 		if(RideType=="UberX") {return(cost.get(0));}
@@ -166,7 +203,12 @@ public class MyUber {
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @param r
+	 * Accomplish the ride r by displacing driver ad costumers at their destination and update the numbers of rides and amount of cash for drivers and costumers
+	 *the costumers has the possibility to give a note to the driver
+	 */
 	private void completeRide(Ride r) {
 		String trafficstate=trafficState();
 		Driver d = r.getDriver();
@@ -174,14 +216,6 @@ public class MyUber {
 		double cost=0;
 		double speed=getSpeed(trafficstate);
 		double distance=distance(c.getDestination(),c.getCoordinates());
-		r.setRideDuration(distance/speed);
-		c.setTotalTime(c.getTotalTime()+r.getRideDuration());
-		d.setState("on-duty");
-		d.setPosition(c.getDestination());
-		c.setCoordinates(c.getDestination());
-		c.setDestination(new  ArrayList<Double>());
-		c.setNumberOfRides(c.getNumberOfRides()+1);
-		d.setNumberOfRides(d.getNumberOfRides()+1);
 		if (r instanceof UberX){
 			cost= getPrice(c,trafficstate,"UberX");
 		}
@@ -194,10 +228,32 @@ public class MyUber {
 		if (r instanceof UberVan){
 			cost= getPrice(c,trafficstate,"UberVan");
 		}
+		r.setRideDuration(distance/speed);
+		c.setTotalTime(c.getTotalTime()+r.getRideDuration());
+		d.setState("on-duty");
+		d.setPosition(c.getDestination());
+		c.setCoordinates(c.getDestination());
+		c.setDestination(new  ArrayList<Double>());
+		c.setNumberOfRides(c.getNumberOfRides()+1);
+		d.setNumberOfRides(d.getNumberOfRides()+1);
 		c.setTotalCharge(c.getTotalCharge()+cost);
 		d.setMoneyCashed(d.getMoneyCashed()+cost);
+		System.out.println("voulez vous donner une note au chauffeur? y/n");
+		Scanner scan= new Scanner(System.in);
+		String text=scan.nextLine();
+		if (text=="y") {
+			System.out.println("Veuillez rentrez une note entre 0 et 5");
+			float note=scan.nextFloat();
+			d.setAppreciationRate(note);
+		}
+		scan.close();
 	}
 	
+	/**
+	 * 
+	 * @return
+	 * Give the traffic state at the current time
+	 */
 	public static String trafficState() {
 		java.util.GregorianCalendar calendar = new GregorianCalendar();
 		int heure = calendar.get(java.util.Calendar.HOUR_OF_DAY);
@@ -229,6 +285,12 @@ public class MyUber {
 		return(null);
 	}
 	
+	/**
+	 * 
+	 * @param trafficstate
+	 * @return
+	 * For a given traffic state, calculate how fast a car is moving
+	 */
 	public static double getSpeed(String trafficstate) {
 		double speed=0;
 		if (trafficstate=="low") {speed=15;}
@@ -252,6 +314,12 @@ public class MyUber {
 		this.rideFactory = rideFactory;
 	}
 	
+	/**
+	 * 
+	 * @param c
+	 * @return
+	 * Return a list of statistics concerning costumers: the number of rides they took, total time they spent in a uber and the total charge they paid
+	 */
 	public ArrayList<Double> CustomerBalance(Customer c){
 		ArrayList<Double> balance=new ArrayList<Double>();
 		balance.add(c.getNumberOfRides());
@@ -260,6 +328,11 @@ public class MyUber {
 		return(balance);
 	}
 	
+	/**
+	 * 
+	 * @return
+	 * Return a list of statistics concerning drivers: the number of rides they made and the total cash they charged
+	 */
 	public ArrayList<Double> SystemBalance() {
 		double totalride=0;
 		double totalcost=0;
@@ -273,13 +346,54 @@ public class MyUber {
 		return(balance);
 	}
 	
-	/*public ArrayList<Customer> FrequencySortingCustomer(){
-		double m=CustomerBalance(c).get(0);
-		for(Customer c:Customers) {
-			
-			
-		}
-	}*/
+	/**
+	 * 
+	 * @return
+	 * Sort the costumers by the frequency they use the application
+	 */
+	public ArrayList<Customer> FrequencySortingCustomer(){
+		ArrayList<Customer> ListeTrie = (ArrayList<Customer>) Customers.clone();
+		CustRideComparator c1=new CustRideComparator();
+		Collections.sort(ListeTrie, c1);
+		return(ListeTrie);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 * Sort the costumers by the amount of cash they spent in rides
+	 */
+	public ArrayList<Customer> ChargeSortingCustomer(){
+		ArrayList<Customer> ListeTrie = (ArrayList<Customer>) Customers.clone();
+		CustCashComparator c1=new CustCashComparator();
+		Collections.sort(ListeTrie, c1);
+		return(ListeTrie);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 * Sort the drivers by their occupation rate
+	 */
+	public ArrayList<Driver> OccupationSortingDriver(){
+		ArrayList<Driver> ListeTrie = (ArrayList<Driver>) drivingDrivers.clone();
+		DriverOccupationComparator c1=new DriverOccupationComparator();
+		Collections.sort(ListeTrie, c1);
+		return(ListeTrie);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 * Sort the drivers by how much clients appreciated them
+	 */
+	public ArrayList<Driver> AppreciationSortingDriver(){
+		ArrayList<Driver> ListeTrie = (ArrayList<Driver>) drivingDrivers.clone();
+		DriverAppreciationComparator c1=new DriverAppreciationComparator();
+		Collections.sort(ListeTrie, c1);
+		return(ListeTrie);
+	}
+	
 
 
 	public static void main(String[] args) {
@@ -365,7 +479,6 @@ public class MyUber {
 		for (Ride r :platform.rides) {
 			System.out.println(r);
 		}
-		
 
 		
 	}
