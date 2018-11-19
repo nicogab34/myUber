@@ -40,7 +40,12 @@ public class MyUber{
 	private void setDestination(Customer c,ArrayList<Double> destination){
 		c.setDestination(destination);
 		Request r =new Request(c, this);
-		r.setPrices(getPrice(c, "medium"));
+		ArrayList<Double> prices = getPrice(c, "medium");
+		r.setPrices(prices);
+		System.out.println("\n" + c.getName()+ "\nHere are the prices for the different types of ride, choose yours !");
+		for (int i=0;i<this.getRideFactory().getRideTypes().size();i++) {
+			System.out.println(this.getRideFactory().getRideTypes().get(i) + " : " + prices.get(i));
+		}
 		c.setRequest(r);
 	}
 	
@@ -140,7 +145,7 @@ public class MyUber{
 	 * @param driver
 	 * Adds a new driver to the platform
 	 */
-	private void add(Driver driver) {
+	public void add(Driver driver) {
 		this.drivers.add(driver);
 	}
 	
@@ -148,7 +153,7 @@ public class MyUber{
 	 * @param customer
 	 * Adds a customer to the platform
 	 */
-	private void add(Customer customer) {
+	public void add(Customer customer) {
 		this.Customers.add(customer);
 	}
 	
@@ -181,6 +186,9 @@ public class MyUber{
 		}
 	}
 	
+	/**
+	 * This method starts the uberPool ride
+	 */
 	private void startRide() {
 		System.out.println("UberPool ride started");
 		for (Driver d : this.uberPoolDrivers()) {
@@ -194,6 +202,9 @@ public class MyUber{
 		
 	}
 	
+	/**
+	 * @return the list of "on-duty" uberPool drivers ordered by distance to be traveled to realize the current uberPool request
+	 */
 	private ArrayList<Driver> uberPoolDrivers() {
 		ArrayList<Driver> uberPoolDrivers= new ArrayList<Driver>();
 		ArrayList<Double> costs= new ArrayList<Double>();
@@ -223,6 +234,12 @@ public class MyUber{
 		return uberPoolDrivers;
 	}
 	
+	
+	/**
+	 * @param driver
+	 * @return
+	 * This method tests every way to serve every customer of the pool request and returns the lowest distance to be travelled if the driver in argument was taking the ride
+	 */
 	private double uberPoolCost(Driver driver) {
 		double cost = -1;
 		ArrayList<ArrayList<Double>> globalOrderPos = new ArrayList<ArrayList<Double>>();
@@ -262,7 +279,7 @@ public class MyUber{
 		return cost;
 	}
 	
-	private int factorial(int n) {
+	public int factorial(int n) {
 		if (n<2) {
 			return 1;
 		}
@@ -401,6 +418,14 @@ public class MyUber{
 		this.rideFactory = rideFactory;
 	}
 	
+	public CarFactory getCarFactory() {
+		return carFactory;
+	}
+
+	public void setCarFactory(CarFactory carFactory) {
+		this.carFactory = carFactory;
+	}
+
 	/**
 	 * 
 	 * @param c

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class RideFactory {
-	private ArrayList<String> rideTypes = new ArrayList<String>(Arrays.asList("UberX","UberPool","UberVan","UberBlack"));
+	private ArrayList<String> rideTypes = new ArrayList<String>(Arrays.asList("UberX","UberBlack","UberPool","UberVan"));
 	
 	public Ride createRide(String Ridetype,Customer customer, Driver driver) {
 		
