@@ -7,12 +7,12 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import myUber.Car;
-import myUber.CarFactory;
-import myUber.Customer;
-import myUber.Driver;
+import cars.Car;
+import cars.CarFactory;
+import customer.Customer;
+import driver.Driver;
 import myUber.MyUber;
-import myUber.RideFactory;
+import rides.RideFactory;
 
 class MyUberTest {
 

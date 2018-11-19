@@ -2,6 +2,9 @@ package myUber;
 
 import java.util.ArrayList;
 
+import customer.Customer;
+import driver.Driver;
+
 public class Request{
 	private Customer customer;
 	private MyUber platform;

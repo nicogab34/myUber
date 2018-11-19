@@ -2,10 +2,10 @@ package Fare;
 
 
 
-import myUber.UberBlack;
-import myUber.UberPool;
-import myUber.UberVan;
-import myUber.UberX;
+import rides.UberBlack;
+import rides.UberPool;
+import rides.UberVan;
+import rides.UberX;
 
 public class FareCalculation implements FareType{
 	
@@ -33,9 +33,9 @@ public class FareCalculation implements FareType{
 		
 			//if rideDistance
 			if (rideDistance<5) {BasicRate=3.3;}
-			if ((rideDistance>5) & (rideDistance<10)){BasicRate=4.2;}
-			if ((rideDistance>10) & (rideDistance<20)){BasicRate=1.91;}
-			if (rideDistance>20){BasicRate=1.5;}
+			if ((rideDistance>=5) & (rideDistance<10)){BasicRate=4.2;}
+			if ((rideDistance>=10) & (rideDistance<20)){BasicRate=1.91;}
+			if (rideDistance>=20){BasicRate=1.5;}
 			
 		}
 		if (rideType=="UberVan") {		// TODO Auto-generated method stub
@@ -45,9 +45,9 @@ public class FareCalculation implements FareType{
 			
 			//if rideDistance
 			if (rideDistance<5) {BasicRate=6.2;}
-			if ((rideDistance>5) & (rideDistance<10)){BasicRate=7.7;}
-			if ((rideDistance>10) & (rideDistance<20)){BasicRate=3.25;}
-			if (rideDistance>20){BasicRate=2.6;}
+			if ((rideDistance>=5) & (rideDistance<10)){BasicRate=7.7;}
+			if ((rideDistance>=10) & (rideDistance<20)){BasicRate=3.25;}
+			if (rideDistance>=20){BasicRate=2.6;}
 
 			
 		}
@@ -58,9 +58,9 @@ public class FareCalculation implements FareType{
 			
 			//if rideDistance
 			if (rideDistance<5) {BasicRate=2.4;}
-			if ((rideDistance>5) & (rideDistance<10)){BasicRate=3;}
-			if ((rideDistance>10) & (rideDistance<20)){BasicRate=1.3;}
-			if (rideDistance>20){BasicRate=1.1;}
+			if ((rideDistance>=5) & (rideDistance<10)){BasicRate=3;}
+			if ((rideDistance>=10) & (rideDistance<20)){BasicRate=1.3;}
+			if (rideDistance>=20){BasicRate=1.1;}
 
 			
 		}
@@ -71,12 +71,11 @@ public class FareCalculation implements FareType{
 			
 			//if rideDistance
 			if (rideDistance<5) {BasicRate=6.2;}
-			if ((rideDistance>5) & (rideDistance<10)){BasicRate=5.5;}
-			if ((rideDistance>10) & (rideDistance<20)){BasicRate=3.25;}
-			if (rideDistance>20){BasicRate=2.6;}
+			if ((rideDistance>=5) & (rideDistance<10)){BasicRate=5.5;}
+			if ((rideDistance>=10) & (rideDistance<20)){BasicRate=3.25;}
+			if (rideDistance>=20){BasicRate=2.6;}
 			
 		}
-		
 		cost=rideDistance*BasicRate*trafficRate;
 		return cost;
 	}
