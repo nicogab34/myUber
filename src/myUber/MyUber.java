@@ -1,10 +1,13 @@
 
 package myUber;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import Fare.*;
@@ -323,6 +326,7 @@ public class MyUber{
 		String trafficstate=trafficState();
 		double cost=0;
 		double speed=getSpeed(trafficstate);
+		Scanner scan= new Scanner(System.in);
 		if (r instanceof UberX){
 			Driver d = r.getDriver();
 			Customer c = r.getCustomer();
@@ -338,6 +342,18 @@ public class MyUber{
 			d.setNumberOfRides(d.getNumberOfRides()+1);
 			c.setTotalCharge(c.getTotalCharge()+cost);
 			d.setMoneyCashed(d.getMoneyCashed()+cost);
+			System.out.println("Veuillez notez le chauffeur entre 0 et 5");	
+			try {
+				int note=scan.nextInt();
+				r.getDriver().setAppreciationRate(note);
+				System.out.println(c.getName()+" a donné la note "+note);
+							}
+			catch(InputMismatchException e) {
+				
+			}
+			catch(NoSuchElementException e) {
+				
+			}
 		}
 		if (r instanceof UberBlack){
 			Driver d = r.getDriver();
@@ -354,6 +370,18 @@ public class MyUber{
 			d.setNumberOfRides(d.getNumberOfRides()+1);
 			c.setTotalCharge(c.getTotalCharge()+cost);
 			d.setMoneyCashed(d.getMoneyCashed()+cost);
+			System.out.println("Veuillez notez le chauffeur entre 0 et 5");	
+			try {
+				int note=scan.nextInt();
+				r.getDriver().setAppreciationRate(note);
+				System.out.println(c.getName()+" a donné la note "+note);
+						}
+			catch(InputMismatchException e) {
+				
+			}
+			catch(NoSuchElementException e) {
+				
+			}
 		}
 		if (r instanceof UberPool){
 			Driver driver = r.getDriver();
@@ -361,6 +389,7 @@ public class MyUber{
 			for(Customer c:customers) {
 				double dist=distance(c.getDestination(),c.getCoordinates());
 				cost=getPrice(c,trafficstate,"UberPool");
+				r.setRideDuration(dist/speed);
 				c.setTotalTime(c.getTotalTime()+r.getRideDuration());
 				c.setCoordinates(c.getDestination());
 				driver.setPosition(c.getDestination());
@@ -368,7 +397,19 @@ public class MyUber{
 				c.setNumberOfRides(c.getNumberOfRides()+1);
 				c.setTotalCharge(c.getTotalCharge()+cost);
 				driver.setMoneyCashed(driver.getMoneyCashed()+cost);
-								}
+				System.out.println("Veuillez notez le chauffeur entre 0 et 5");	
+				try {
+					int note=scan.nextInt();
+					r.getDriver().setAppreciationRate(note);
+					System.out.println(c.getName()+" a donné la note "+note);
+									}
+				catch(InputMismatchException e) {
+					
+				}
+				catch(NoSuchElementException e) {
+					
+				}
+				}
 			driver.setState("on-duty");
 			driver.setNumberOfRides(driver.getNumberOfRides()+1);
 		}
@@ -387,17 +428,20 @@ public class MyUber{
 			d.setNumberOfRides(d.getNumberOfRides()+1);
 			c.setTotalCharge(c.getTotalCharge()+cost);
 			d.setMoneyCashed(d.getMoneyCashed()+cost);
+			System.out.println("Veuillez notez le chauffeur entre 0 et 5");	
+			try {
+				int note=scan.nextInt();
+				r.getDriver().setAppreciationRate(note);
+				System.out.println(c.getName()+" a donné la note "+note);
+							}
+			catch(InputMismatchException e) {
+				
+			}
+			catch(NoSuchElementException e) {
+				
+			}
 		}
 
-		/*System.out.println("voulez vous donner une note au chauffeur? y/n");
-		Scanner scan= new Scanner(System.in);
-		String text=scan.nextLine();
-		if (text=="y") {
-			System.out.println("Veuillez rentrez une note entre 0 et 5");
-			float note=scan.nextFloat();
-			d.setAppreciationRate(note);
-		}
-		scan.close();*/
 	}
 	
 
@@ -522,7 +566,7 @@ public class MyUber{
 	/**
 	 * 
 	 * @return
-	 * Sort the costumers by the amount of cash they spent in rides
+	 * Sort the costumers by the amount of cash they spent in rides 
 	 */
 	public ArrayList<Customer> ChargeSortingCustomer(){
 		ArrayList<Customer> ListeTrie = (ArrayList<Customer>) Customers.clone();
@@ -558,6 +602,12 @@ public class MyUber{
 
 
 	public static void main(String[] args) {
+		
+		/*Use Case scenario number 1:
+		 * The platform and the factories are initialized 
+		 * as well as drivers, customers and cars.
+		 * Destinations are given to each customer.
+		 */
 		
 		RideFactory rideFactory = new RideFactory();
 		
@@ -643,16 +693,29 @@ public class MyUber{
 		ArrayList<Double> dest6 = new ArrayList<Double>(Arrays.asList(2.0, 1.7));
 		ArrayList<Double> dest7 = new ArrayList<Double>(Arrays.asList(3.0, 32.0));
 		
-		//Core
+		/*End of Use Case scenario number 1 
+		 */
 		
-		/* platform.setDestination(c1,dest1);
-		platform.chooseRideType(c1, "UberVan");
-		platform.setDestination(c2,dest2);
-		platform.chooseRideType(c1, "UberVan");
-		platform.chooseRideType(c2, "UberBlack");
-		platform.setDestination(c3,dest3);
-		platform.chooseRideType(c3, "UberVan"); */
 		
+		/*Use case scenario number 2:
+		 * The customer c1 (Baptiste Andrieu) wants to go to the destination dest1.
+		 * The four type of rides are proposed and he chooses the UberVan type.
+		 * The ride is completed and the customer can note the driver.
+		 */
+		
+		platform.setDestination(c1,dest1);
+		platform.chooseRideType(c1, "UberVan");
+
+		/*End of use case scenario number 2
+		 */
+
+		
+		/*Use case scenario number 3:
+		 * Customer c1 (Baptiste Andrieu), c2 (Noé Mikati) and c3 (Christophe Gallon)
+		 * want to go respectively to destinations dest 6, dest7 and dest3.
+		 * The four type of rides are proposed and they all choose the UberPool type.
+		 * The ride is completed and customers can note the driver.
+		 */
 		
 		platform.setDestination(c1,dest6);
 		platform.chooseRideType(c1, "UberPool");
@@ -660,7 +723,44 @@ public class MyUber{
 		platform.chooseRideType(c2, "UberPool");
 		platform.setDestination(c3,dest3);
 		platform.chooseRideType(c3, "UberPool");
+
 		
+		/*End of use case scenario number 3
+		 */
+
+		
+		/* Use case scenario number 4:
+		 * Statistics about two rides in addition to the precedent rides are collected.
+		 * Then driver and customers are sorted in order to print:
+		 * the most charged customer
+		 * the customer the most using the application
+		 * the most appreciated driver
+		 * the most occupied driver
+		 */
+		
+		platform.setDestination(c2,dest2);
+		platform.chooseRideType(c2, "UberBlack");
+		platform.setDestination(c3,dest3);
+		platform.chooseRideType(c3, "UberVan");
+		
+		System.out.println("The most charged customer is");
+		System.out.println(platform.ChargeSortingCustomer().get(0));
+		System.out.println("The customer the most using the application is");
+		System.out.println(platform.FrequencySortingCustomer().get(0));
+		System.out.println("The most liked driver is");
+		System.out.println(platform.AppreciationSortingDriver().get(0));
+		System.out.println("The most occupied driver is");
+		System.out.println(platform.OccupationSortingDriver().get(0));
+		System.out.println(d1.getAppreciationRate());
+		System.out.println(d2.getAppreciationRate());
+		System.out.println(d3.getAppreciationRate());
+		System.out.println(d4.getAppreciationRate());
+		System.out.println(d5.getAppreciationRate());
+		System.out.println(d6.getAppreciationRate());
+		System.out.println(d7.getAppreciationRate());
+		
+		/*End of use case scenario number 4
+		 */	
 	}
 
 }

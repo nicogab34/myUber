@@ -38,7 +38,7 @@ public class Driver extends Lock{
 		nextID++;
 		this.position=position;
 		this.AppreciationRate.add(5.);
-		this.AppreciationRate.add(0.);
+		this.AppreciationRate.add(1.);
 	}
 		
 	/**
