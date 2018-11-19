@@ -1,8 +1,11 @@
 package myUber;
 
+import java.util.ArrayList;
+
 public abstract class Ride {
 	private String state;
 	private Customer customer;
+	private ArrayList<Customer> customers=new ArrayList<Customer>();
 	private int ID;
 	private Driver driver;
 	private static int nextID;
@@ -15,6 +18,27 @@ public abstract class Ride {
 		this.driver = driver;
 		nextID++;
 	}
+	
+	public ArrayList<Customer> getCustomers() {
+		return customers;
+	}
+
+	public void setCustomers(ArrayList<Customer> customers) {
+		this.customers = customers;
+	}
+
+	public Ride(String state, ArrayList<Customer> customers, Driver driver) {
+		super();
+		this.state = state;
+		for (Customer c:customers) {
+			
+			this.customers.add(c);
+		}
+		ID = nextID;
+		this.driver = driver;
+		nextID++;
+	}
+	
 	
 	public double getRideDuration() {
 		return rideDuration;

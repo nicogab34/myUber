@@ -17,10 +17,14 @@ public class RideFactory {
 		if(Ridetype.equalsIgnoreCase("UberVan")) {
 			return (new UberVan(customer,driver));
 		}
-		if(Ridetype.equalsIgnoreCase("UberPool")) {
-			return (new UberPool(customer,driver));
-		}
 		return(null);
+	}
+	
+	public Ride createRide(String Ridetype,ArrayList<Customer> customers, Driver driver) {
+		if(Ridetype.equalsIgnoreCase("UberPool")) {
+			return (new UberPool(customers,driver));
+		}
+		return(null);		
 	}
 
 	public ArrayList<String> getRideTypes() {

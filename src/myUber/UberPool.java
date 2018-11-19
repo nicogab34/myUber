@@ -1,9 +1,11 @@
 package myUber;
 
+import java.util.ArrayList;
+
 public class UberPool extends Ride{
 	
-	public UberPool(Customer customer,Driver driver) {
-		super("unconfirmed", customer,driver);
+	public UberPool(ArrayList<Customer> customers,Driver driver) {
+		super("unconfirmed", customers,driver);
 		// TODO Auto-generated constructor stub
 	}
 

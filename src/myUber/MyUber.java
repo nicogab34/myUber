@@ -192,14 +192,14 @@ public class MyUber{
 	private void startRide() {
 		System.out.println("UberPool ride started");
 		for (Driver d : this.uberPoolDrivers()) {
-			completePoolRide(this.poolRequests, d);
+			
+			Ride r = this.rideFactory.createRide("UberPool",this.poolRequests, d);
+			this.rides.add(r);
+			d.setState("on-a-ride");
+			completeRide(r);
 			this.poolRequests = new ArrayList<Customer>();
 			return;
 		}
-	}
-	
-	private void completePoolRide(ArrayList<Customer> customers, Driver d) {
-		
 	}
 	
 	/**
@@ -279,6 +279,12 @@ public class MyUber{
 		return cost;
 	}
 	
+	/**
+	 * 
+	 * @param n
+	 * @return
+	 * factorial of n
+	 */
 	public int factorial(int n) {
 		if (n<2) {
 			return 1;
@@ -315,33 +321,74 @@ public class MyUber{
 	 */
 	private void completeRide(Ride r) {
 		String trafficstate=trafficState();
-		Driver d = r.getDriver();
-		Customer c = r.getCustomer();
 		double cost=0;
 		double speed=getSpeed(trafficstate);
-		double distance=distance(c.getDestination(),c.getCoordinates());
 		if (r instanceof UberX){
+			Driver d = r.getDriver();
+			Customer c = r.getCustomer();
 			cost= getPrice(c,trafficstate,"UberX");
+			double distance=distance(c.getDestination(),c.getCoordinates());
+			r.setRideDuration(distance/speed);
+			c.setTotalTime(c.getTotalTime()+r.getRideDuration());
+			d.setState("on-duty");
+			d.setPosition(c.getDestination());
+			c.setCoordinates(c.getDestination());
+			c.setDestination(new  ArrayList<Double>());
+			c.setNumberOfRides(c.getNumberOfRides()+1);
+			d.setNumberOfRides(d.getNumberOfRides()+1);
+			c.setTotalCharge(c.getTotalCharge()+cost);
+			d.setMoneyCashed(d.getMoneyCashed()+cost);
 		}
 		if (r instanceof UberBlack){
-			cost= getPrice(c,trafficstate,"UberBlack");			
+			Driver d = r.getDriver();
+			Customer c = r.getCustomer();
+			cost= getPrice(c,trafficstate,"UberBlack");		
+			double distance=distance(c.getDestination(),c.getCoordinates());
+			r.setRideDuration(distance/speed);
+			c.setTotalTime(c.getTotalTime()+r.getRideDuration());
+			d.setState("on-duty");
+			d.setPosition(c.getDestination());
+			c.setCoordinates(c.getDestination());
+			c.setDestination(new  ArrayList<Double>());
+			c.setNumberOfRides(c.getNumberOfRides()+1);
+			d.setNumberOfRides(d.getNumberOfRides()+1);
+			c.setTotalCharge(c.getTotalCharge()+cost);
+			d.setMoneyCashed(d.getMoneyCashed()+cost);
 		}
 		if (r instanceof UberPool){
-			cost= getPrice(c,trafficstate,"UberPool");
+			Driver driver = r.getDriver();
+			ArrayList<Customer> customers= r.getCustomers();
+			for(Customer c:customers) {
+				double dist=distance(c.getDestination(),c.getCoordinates());
+				cost=getPrice(c,trafficstate,"UberPool");
+				c.setTotalTime(c.getTotalTime()+r.getRideDuration());
+				c.setCoordinates(c.getDestination());
+				driver.setPosition(c.getDestination());
+				c.setDestination(new  ArrayList<Double>());
+				c.setNumberOfRides(c.getNumberOfRides()+1);
+				c.setTotalCharge(c.getTotalCharge()+cost);
+				driver.setMoneyCashed(driver.getMoneyCashed()+cost);
+								}
+			driver.setState("on-duty");
+			driver.setNumberOfRides(driver.getNumberOfRides()+1);
 		}
 		if (r instanceof UberVan){
+			Driver d = r.getDriver();
+			Customer c = r.getCustomer();
 			cost= getPrice(c,trafficstate,"UberVan");
+			double distance=distance(c.getDestination(),c.getCoordinates());
+			r.setRideDuration(distance/speed);
+			c.setTotalTime(c.getTotalTime()+r.getRideDuration());
+			d.setState("on-duty");
+			d.setPosition(c.getDestination());
+			c.setCoordinates(c.getDestination());
+			c.setDestination(new  ArrayList<Double>());
+			c.setNumberOfRides(c.getNumberOfRides()+1);
+			d.setNumberOfRides(d.getNumberOfRides()+1);
+			c.setTotalCharge(c.getTotalCharge()+cost);
+			d.setMoneyCashed(d.getMoneyCashed()+cost);
 		}
-		r.setRideDuration(distance/speed);
-		c.setTotalTime(c.getTotalTime()+r.getRideDuration());
-		d.setState("on-duty");
-		d.setPosition(c.getDestination());
-		c.setCoordinates(c.getDestination());
-		c.setDestination(new  ArrayList<Double>());
-		c.setNumberOfRides(c.getNumberOfRides()+1);
-		d.setNumberOfRides(d.getNumberOfRides()+1);
-		c.setTotalCharge(c.getTotalCharge()+cost);
-		d.setMoneyCashed(d.getMoneyCashed()+cost);
+
 		/*System.out.println("voulez vous donner une note au chauffeur? y/n");
 		Scanner scan= new Scanner(System.in);
 		String text=scan.nextLine();
@@ -352,6 +399,8 @@ public class MyUber{
 		}
 		scan.close();*/
 	}
+	
+
 	
 	/**
 	 * 
