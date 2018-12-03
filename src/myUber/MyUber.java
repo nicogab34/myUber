@@ -618,28 +618,14 @@ public class MyUber{
 		}	
 	
 
-private static Map<String, String> parseParameters(final String[] args) {
-
-    final Map<String, String> parameters = new HashMap<>();
-
-    for (final String arg : args) {
-        if (!arg.startsWith("--")) {
-            System.err.println("Bad parameter: " + arg);
-            System.exit(2);
-        }
-
-        final String[] tab = arg.substring(2).split("=");
-        parameters.put(tab[0], tab[1]);
-    }
-
-    return parameters;
-}
-
-
-	
-	
+		
 	
 	public static void main(String[] args) {
+		
+		CarFactory carFactory = new CarFactory();
+		RideFactory rideFactory = new RideFactory();
+		MyUber platform = new MyUber(rideFactory, carFactory);
+		
 		
 		/*Use Case scenario number 1:
 		 * The platform and the factories are initialized 
@@ -658,34 +644,61 @@ private static Map<String, String> parseParameters(final String[] args) {
 				for (String s : l) {
 					System.out.println(s);
 				}
-				System.out.println(a);
+				/*Commande setup  <nStandardCars> <nBerlinCars> <nVanCars> <nCustomers> */
+				if (l[0].equalsIgnoreCase("setup")) {
+					int nStandard=Integer.parseInt(l[1]);
+					int nBerline=Integer.parseInt(l[2]);
+					int nVan=Integer.parseInt(l[3]);
+					int nCustomer=Integer.parseInt(l[4]);
+					
+					for (int i=0;i==nStandard;i++) {
+						Driver driver = new Driver("Drivername", "Driversurname", "offduty",new ArrayList<Double>(Arrays.asList(0.,0.)));
+						Car car = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(driver)), "UberX");
+						platform.takeCar(driver, car);
+						platform.add(driver);
+					}
+					for (int i=0;i==nBerline;i++) {
+						Driver driver = new Driver("Drivername", "Driversurname", "offduty",new ArrayList<Double>(Arrays.asList(0.,0.)));
+						Car car = platform.carFactory.createCar("Berline", new ArrayList<Driver>(Arrays.asList(driver)), "");
+						platform.takeCar(driver, car);
+						platform.add(driver);
+						
+					}
+					for (int i=0;i==nVan;i++) {
+						Driver driver = new Driver("Drivername", "Driversurname", "offduty",new ArrayList<Double>(Arrays.asList(0.,0.)));
+						Car car = platform.carFactory.createCar("Van", new ArrayList<Driver>(Arrays.asList(driver)), "");
+						platform.takeCar(driver, car);
+						platform.add(driver);
+						
+					}
+					for (int i=0;i==nCustomer;i++) {
+						Customer customer = new Customer("CustomerName", "CustomerSurname", new ArrayList<Double>(Arrays.asList(1.2, 4.3)), 000000000);
+						platform.add(customer);						
+					}
+					System.out.println(platform.Customers);
+					System.out.println(platform.drivingDrivers);
+					
+				}
+				
+				
+				
+				
+				
+				
 			}
 		}
 		scan.close();
 		
-		final Map<String, String> parameters = parseParameters(args);
 
-		String nameCust  = "name";
-		final String nameFromParameters = parameters.get("nameCust");
-		if (nameFromParameters != null) {
-		    nameCust=nameFromParameters;
-		}
-
-
-		final String surnameFromParameters = parameters.get("Surname");
-		String Surname  = "Surname";
-		if (surnameFromParameters != null) {
-		    Surname=surnameFromParameters;
-		}
 		
-		Customer c1 = new Customer(nameCust, Surname, new ArrayList<Double>(Arrays.asList(1.2, 4.3)), 125765894);
+
+
+		
 		
 /*		
-		RideFactory rideFactory = new RideFactory();
 		
-		CarFactory carFactory = new CarFactory();
 		
-		MyUber platform = new MyUber(rideFactory, carFactory);
+
 		
 		Driver d1 = new Driver("Vincent", "Bouget", "on-duty",new ArrayList<Double>(Arrays.asList(1.,5.)));
 		Driver d2 = new Driver("Daniel", "(Taxi)", "on-duty",new ArrayList<Double>(Arrays.asList(90.,50.)));
@@ -833,6 +846,8 @@ private static Map<String, String> parseParameters(final String[] args) {
 		
 		/*End of use case scenario number 4
 		 */	
+		
+
 	
 	}
 }
