@@ -134,6 +134,10 @@ public class Driver extends Lock{
 		}
 	}
 	
+	public void resetCar() {
+		this.car = null;
+	}
+	
 	public Car getCar() {
 		return car;
 	}
@@ -164,7 +168,8 @@ public class Driver extends Lock{
 	"Name : "+this.name+"\n"+
 	"Surname : "+this.surname+"\n"+
 	"State : "+this.state+"\n"+
-	"Car : "+carString+"\n";
+	"Car : "+carString+"\n"+
+	"Position : "+this.position+"\n";
 	}
 	
 	public double onDutyRate() {

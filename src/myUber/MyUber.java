@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Random;
 import java.util.Scanner;
 
 import Fare.*;
@@ -33,6 +34,7 @@ import rides.UberX;
 public class MyUber{
 	private ArrayList<Driver> drivers = new ArrayList<Driver>();
 	private ArrayList<Driver> drivingDrivers = new ArrayList<Driver>();
+	private ArrayList<Car> cars = new ArrayList<Car>();
 	private ArrayList<Customer> Customers= new ArrayList<Customer>();
 	private ArrayList<Ride> rides = new ArrayList<Ride>();
 	private RideFactory rideFactory;
@@ -48,6 +50,12 @@ public class MyUber{
 		super();
 		this.rideFactory = rideFactory;
 		this.carFactory = carFactory;
+	}
+	
+	private Car createCar(String carType, ArrayList<Driver> drivers, String rideType) {
+		Car c = this.carFactory.createCar(carType, drivers, rideType);
+		cars.add(c);
+		return c;
 	}
 	
 	/**
@@ -185,8 +193,13 @@ public class MyUber{
 	 */
 	private void takeCar(Driver driver, Car car) {
 		if (car.getOwners().contains(driver)) {
-			driver.takeCar(car);
 			this.drivingDrivers.add(driver);
+			for (Driver d : car.getOwners()) {
+				if (d.getCar() == car) {
+					d.resetCar();
+				}
+			}
+			driver.takeCar(car);
 		}
 	}
 	
@@ -618,14 +631,14 @@ public class MyUber{
 		}	
 	
 
-		
 	
 	public static void main(String[] args) {
+		
+		System.out.println("Welcome on myUber !");
 		
 		CarFactory carFactory = new CarFactory();
 		RideFactory rideFactory = new RideFactory();
 		MyUber platform = new MyUber(rideFactory, carFactory);
-		
 		
 		/*Use Case scenario number 1:
 		 * The platform and the factories are initialized 
@@ -641,9 +654,6 @@ public class MyUber{
 					app=false;
 				}
 				String[] l=a.split(" ");
-				for (String s : l) {
-					System.out.println(s);
-				}
 				/*Commande setup  <nStandardCars> <nBerlinCars> <nVanCars> <nCustomers> */
 				if (l[0].equalsIgnoreCase("setup")) {
 					int nStandard=Integer.parseInt(l[1]);
@@ -651,28 +661,29 @@ public class MyUber{
 					int nVan=Integer.parseInt(l[3]);
 					int nCustomer=Integer.parseInt(l[4]);
 					
-					for (int i=0;i==nStandard;i++) {
-						Driver driver = new Driver("Drivername", "Driversurname", "offduty",new ArrayList<Double>(Arrays.asList(0.,0.)));
-						Car car = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(driver)), "UberX");
-						platform.takeCar(driver, car);
+					for (int i=0;i<nStandard;i++) {
+						Driver driver = new Driver("Drivername"+platform.drivers.size(), "Driversurname"+platform.drivers.size(), "off-duty",new ArrayList<Double>(Arrays.asList(0.,0.)));
 						platform.add(driver);
+						Car car = platform.createCar("Standard", new ArrayList<Driver>(Arrays.asList(driver)), "UberX");
+						platform.takeCar(driver, car);
+	
 					}
-					for (int i=0;i==nBerline;i++) {
-						Driver driver = new Driver("Drivername", "Driversurname", "offduty",new ArrayList<Double>(Arrays.asList(0.,0.)));
-						Car car = platform.carFactory.createCar("Berline", new ArrayList<Driver>(Arrays.asList(driver)), "");
-						platform.takeCar(driver, car);
+					for (int i=0;i<nBerline;i++) {
+						Driver driver = new Driver("Drivername"+platform.drivers.size(), "Driversurname"+platform.drivers.size(), "off-duty",new ArrayList<Double>(Arrays.asList(0.,0.)));
 						platform.add(driver);
+						Car car = platform.createCar("Berline", new ArrayList<Driver>(Arrays.asList(driver)), "");
+						platform.takeCar(driver, car);
 						
 					}
-					for (int i=0;i==nVan;i++) {
-						Driver driver = new Driver("Drivername", "Driversurname", "offduty",new ArrayList<Double>(Arrays.asList(0.,0.)));
-						Car car = platform.carFactory.createCar("Van", new ArrayList<Driver>(Arrays.asList(driver)), "");
-						platform.takeCar(driver, car);
+					for (int i=0;i<nVan;i++) {
+						Driver driver = new Driver("Drivername"+platform.drivers.size(), "Driversurname"+platform.drivers.size(), "off-duty",new ArrayList<Double>(Arrays.asList(0.,0.)));
 						platform.add(driver);
+						Car car = platform.createCar("Van", new ArrayList<Driver>(Arrays.asList(driver)), "");
+						platform.takeCar(driver, car);
 						
 					}
-					for (int i=0;i==nCustomer;i++) {
-						Customer customer = new Customer("CustomerName", "CustomerSurname", new ArrayList<Double>(Arrays.asList(1.2, 4.3)), 000000000);
+					for (int i=0;i<nCustomer;i++) {
+						Customer customer = new Customer("CustomerName"+platform.Customers.size(), "CustomerSurname"+platform.Customers.size(), new ArrayList<Double>(Arrays.asList(1.2, 4.3)), 000000000);
 						platform.add(customer);						
 					}
 					System.out.println(platform.Customers);
@@ -680,10 +691,116 @@ public class MyUber{
 					
 				}
 				
+				else if (l[0].equals("addCustomer")){
+					if (l.length == 3){
+						Random r = new Random();
+						double x = 100*r.nextDouble()-50;
+						double y = 100*r.nextDouble()-50;
+						ArrayList<Double> position = new ArrayList<Double>(Arrays.asList(x, y));
+						Customer customer = new Customer(l[1],l[2],position,00);
+						platform.add(customer);
+						System.out.println(platform.Customers);
+					}
+					else {
+						System.out.println("Invalid number of arguments !");
+					}
+				}
 				
+				else if (l[0].equals("addCarDriver")){
+					if (l.length == 4){
+						Driver driver = new Driver(l[1],l[2],"off-duty",new ArrayList<Double>(Arrays.asList(0.,0.)));
+						String rideType = "";
+						Random r = new Random();
+						if (l[3].equals("Standard")) {
+							if (r.nextBoolean()){
+								rideType = "UberX";
+							}
+							else {
+								rideType = "UberPool";
+							}
+						}
+						System.out.println(driver);
+						ArrayList<Driver> drivers = new ArrayList<Driver>(Arrays.asList(driver));
+						Car car = platform.createCar(l[3],drivers,rideType);
+						platform.add(driver);
+						System.out.println(car);
+						platform.takeCar(driver,car);
+						System.out.println(platform.drivers);
+						System.out.println(platform.cars);
+					}
+					else {
+						System.out.println("Invalid number of arguments !");
+					}
+				}
 				
+				else if (l[0].equals("addDriver")){
+					if (l.length == 4){
+						Driver driver = new Driver(l[1],l[2],"off-duty",new ArrayList<Double>(Arrays.asList(0.,0.)));
+						platform.add(driver);
+						boolean found=false;
+						for (Car c : platform.cars) {
+							if (c.getID().equals(l[3])){
+								c.getOwners().add(driver);
+								platform.takeCar(driver, c);
+								found = true;
+							}
+						}
+						System.out.println(platform.cars);
+						System.out.println(platform.drivers);
+						if (!found){
+							System.out.println("We can't find a car with this ID");
+						}
+					}
+					else {
+						System.out.println("Invalid number of arguments !");
+					}
+				}
 				
+				else if (l[0].equals("setDriverStatus")){
+					if (l.length == 4){
+						boolean found=false;
+						for (Driver d : platform.drivers) {
+							if ((d.getName().equals(l[1]))&&(d.getSurname().equals(l[2]))) {
+								found=true;
+								d.setState(l[3]);
+							}
+						}
+						System.out.println(platform.drivers);
+						if (!found){
+							System.out.println("We can't find a driver with this name and surname");
+						}
+					}
+					else {
+						System.out.println("Invalid number of arguments !");
+					}
+				}
 				
+				else if (l[0].equals("moveCar")){
+					if (l.length == 4){
+						boolean found=false;
+						for (Car c : platform.cars) {
+							if (c.getID().equals(l[1])){
+								found = true;
+								for (Driver d : c.getOwners()) {
+									if (d.getCar() == c){
+										ArrayList<Double> pos = new ArrayList<Double>();
+										pos.add(Double.parseDouble(l[2]));
+										pos.add(Double.parseDouble(l[3]));
+										d.setPosition(pos);
+									}
+								}
+							}
+						}
+						System.out.println(platform.cars);
+						System.out.println(platform.drivers);
+						if (!found){
+							System.out.println("We can't find a car with this ID");
+						}
+					}
+					else {
+						System.out.println("Invalid number of arguments !");
+					}
+				}
 				
 			}
 		}

@@ -1,0 +1,158 @@
+/*Use Case scenario number 1:
+		 * The platform and the factories are initialized 
+		 * as well as drivers, customers and cars.
+		 * Destinations are given to each customer.
+		 */
+		
+		RideFactory rideFactory = new RideFactory();
+		
+		CarFactory carFactory = new CarFactory();
+		
+		MyUber platform = new MyUber(rideFactory, carFactory);
+		
+		Driver d1 = new Driver("Vincent", "Bouget", "on-duty",new ArrayList<Double>(Arrays.asList(1.,5.)));
+		Driver d2 = new Driver("Daniel", "(Taxi)", "on-duty",new ArrayList<Double>(Arrays.asList(90.,50.)));
+		Driver d3 = new Driver("Nicolas", "Gabrion", "on-duty",new ArrayList<Double>(Arrays.asList(10.,6.)));
+		Driver d4 = new Driver("Jean-Alexandre", "Dumond", "on-duty",new ArrayList<Double>(Arrays.asList(0.,6.7)));
+		Driver d5 = new Driver("Neil", "Armstrong", "on-duty",new ArrayList<Double>(Arrays.asList(100.,60.)));
+		Driver d6 = new Driver("Chofeur", "Cithechampillon", "on-duty",new ArrayList<Double>(Arrays.asList(4.0,6.2)));
+		Driver d7 = new Driver("Sep", "Arti", "on-duty",new ArrayList<Double>(Arrays.asList(-5.,1.)));
+		Driver d8 = new Driver("d", "8", "on-duty",new ArrayList<Double>(Arrays.asList(0.,1.)));
+		Driver d9 = new Driver("d", "9", "on-duty",new ArrayList<Double>(Arrays.asList(-5.,1.6)));
+		Driver d10 = new Driver("d", "10", "on-duty",new ArrayList<Double>(Arrays.asList(-5.,12.)));
+		Driver d11 = new Driver("Sdep", "11", "on-duty",new ArrayList<Double>(Arrays.asList(6.,2.3)));
+		
+		
+		Car v1 = platform.carFactory.createCar("Van", new ArrayList<Driver>(Arrays.asList(d1,d2)),"");
+		Car v2 = platform.carFactory.createCar("Van", new ArrayList<Driver>(Arrays.asList(d1,d2)),"");
+		Car v3 = platform.carFactory.createCar("Van", new ArrayList<Driver>(Arrays.asList(d1,d2, d3, d4)),"");
+		Car s1 = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d3)), "UberX");
+		Car s2 = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d4,d5)), "UberX");
+		Car s3 = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d5,d6,d7)), "UberX");
+		Car s4 = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d6)), "UberX");
+		Car s5 = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d8)), "UberPool");
+		Car s6 = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d9)), "UberPool");
+		Car s7 = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d10)), "UberPool");
+		Car s8 = platform.carFactory.createCar("Standard", new ArrayList<Driver>(Arrays.asList(d11)), "UberPool");
+		Car b1 = platform.carFactory.createCar("Berline", new ArrayList<Driver>(Arrays.asList(d7)),"");
+		Car b2 = platform.carFactory.createCar("Berline", new ArrayList<Driver>(Arrays.asList(d3)),"");
+		Car b3 = platform.carFactory.createCar("Berline", new ArrayList<Driver>(Arrays.asList(d1,d7)),"");
+		Car b4 = platform.carFactory.createCar("Berline", new ArrayList<Driver>(Arrays.asList(d4)),"");
+		
+		Customer c1 = new Customer("Baptiste", "Andrieu", new ArrayList<Double>(Arrays.asList(1.2, 4.3)), 125765894);
+		Customer c2 = new Customer("Noé", "Mikati", new ArrayList<Double>(Arrays.asList(0.0, 6.3)), 125775894);
+		Customer c3 = new Customer("Christophe", "Gallon", new ArrayList<Double>(Arrays.asList(0.0, 0.0)), 125775824);
+		Customer c4 = new Customer("Her", "Hoi", new ArrayList<Double>(Arrays.asList(60.0, 20.0)), 125775823);
+		Customer c5 = new Customer("Barack", "Obama", new ArrayList<Double>(Arrays.asList(2.0, 6.7)), 895775824);
+		Customer c6 = new Customer("Lady", "Diana", new ArrayList<Double>(Arrays.asList(7.0, 3.1)), 125885824);
+		Customer c7 = new Customer("Catherine", "Guillouard", new ArrayList<Double>(Arrays.asList(0.0, 0.0)), 125715824);
+		
+		platform.add(d1);
+		platform.add(d2);
+		platform.add(d3);
+		platform.add(d4);
+		platform.add(d5);
+		platform.add(d6);
+		platform.add(d7);
+		platform.add(d8);
+		platform.add(d9);
+		platform.add(d10);
+		platform.add(d11);
+		
+		platform.add(c1);
+		platform.add(c2);
+		platform.add(c3);
+		platform.add(c4);
+		platform.add(c5);
+		platform.add(c6);
+		platform.add(c7);
+
+		platform.takeCar(d1, v1);
+		platform.takeCar(d2, v2);
+		platform.takeCar(d3, v3);
+		platform.takeCar(d4, s2);
+		platform.takeCar(d5, s3);
+		platform.takeCar(d6, s4);
+		platform.takeCar(d7, b3);
+		platform.takeCar(d8, s5);
+		platform.takeCar(d9, s6);
+		platform.takeCar(d10, s7);
+		platform.takeCar(d11, s8);
+		
+		//Destinations
+		ArrayList<Double> dest1 = new ArrayList<Double>(Arrays.asList(3.5, 2.7));
+		ArrayList<Double> dest2 = new ArrayList<Double>(Arrays.asList(1.0, 0.0));
+		ArrayList<Double> dest3 = new ArrayList<Double>(Arrays.asList(2.0, 1.0));
+		ArrayList<Double> dest4 = new ArrayList<Double>(Arrays.asList(0.0, 0.0));
+		ArrayList<Double> dest5 = new ArrayList<Double>(Arrays.asList(5.0, 1.0));
+		ArrayList<Double> dest6 = new ArrayList<Double>(Arrays.asList(2.0, 1.7));
+		ArrayList<Double> dest7 = new ArrayList<Double>(Arrays.asList(3.0, 32.0));
+		
+		/*End of Use Case scenario number 1 
+		 */
+		
+		
+		/*Use case scenario number 2:
+		 * The customer c1 (Baptiste Andrieu) wants to go to the destination dest1.
+		 * The four type of rides are proposed and he chooses the UberVan type.
+		 * The ride is completed and the customer can note the driver.
+		 */
+		
+		platform.setDestination(c1,dest1);
+		platform.chooseRideType(c1, "UberVan");
+
+		/*End of use case scenario number 2
+		 */
+
+		
+		/*Use case scenario number 3:
+		 * Customer c1 (Baptiste Andrieu), c2 (Noé Mikati) and c3 (Christophe Gallon)
+		 * want to go respectively to destinations dest 6, dest7 and dest3.
+		 * The four type of rides are proposed and they all choose the UberPool type.
+		 * The ride is completed and customers can note the driver.
+		 */
+		
+		platform.setDestination(c1,dest6);
+		platform.chooseRideType(c1, "UberPool");
+		platform.setDestination(c2,dest7);
+		platform.chooseRideType(c2, "UberPool");
+		platform.setDestination(c3,dest3);
+		platform.chooseRideType(c3, "UberPool");
+
+		
+		/*End of use case scenario number 3
+		 */
+
+		
+		/* Use case scenario number 4:
+		 * Statistics about two rides in addition to the precedent rides are collected.
+		 * Then driver and customers are sorted in order to print:
+		 * the most charged customer
+		 * the customer the most using the application
+		 * the most appreciated driver
+		 * the most occupied driver
+		 */
+		
+		platform.setDestination(c2,dest2);
+		platform.chooseRideType(c2, "UberBlack");
+		platform.setDestination(c3,dest3);
+		platform.chooseRideType(c3, "UberVan");
+		
+		System.out.println("The most charged customer is");
+		System.out.println(platform.ChargeSortingCustomer().get(0));
+		System.out.println("The customer the most using the application is");
+		System.out.println(platform.FrequencySortingCustomer().get(0));
+		System.out.println("The most liked driver is");
+		System.out.println(platform.AppreciationSortingDriver().get(0));
+		System.out.println("The most occupied driver is");
+		System.out.println(platform.OccupationSortingDriver().get(0));
+		System.out.println(d1.getAppreciationRate());
+		System.out.println(d2.getAppreciationRate());
+		System.out.println(d3.getAppreciationRate());
+		System.out.println(d4.getAppreciationRate());
+		System.out.println(d5.getAppreciationRate());
+		System.out.println(d6.getAppreciationRate());
+		System.out.println(d7.getAppreciationRate());
+		
+		/*End of use case scenario number 4
+		 */	

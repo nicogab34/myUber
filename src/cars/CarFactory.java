@@ -14,13 +14,13 @@ public class CarFactory {
 	 * @return a car created in the car factory
 	 */
 	public Car createCar(String carType, ArrayList<Driver> drivers, String rideType) {
-		if (carType == "Berline") {
+		if (carType.equals("Berline")) {
 			return new Berline(drivers);
 		}
-		else if (carType == "Van") {
+		else if (carType.equals("Van")) {
 			return new Van(drivers);
 		}
-		else if (carType == "Standard") {
+		else if (carType.equals("Standard")) {
 			return new Standard(drivers, rideType);
 		}
 		return null;
