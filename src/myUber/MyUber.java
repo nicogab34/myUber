@@ -597,10 +597,10 @@ public class MyUber{
 		DriverAppreciationComparator c1=new DriverAppreciationComparator();
 		Collections.sort(ListeTrie, c1);
 		return(ListeTrie);
-	}
+		}	
 	
 
-
+	/*
 	public static void main(String[] args) {
 		
 		/*Use Case scenario number 1:
@@ -608,7 +608,7 @@ public class MyUber{
 		 * as well as drivers, customers and cars.
 		 * Destinations are given to each customer.
 		 */
-		
+		/*
 		RideFactory rideFactory = new RideFactory();
 		
 		CarFactory carFactory = new CarFactory();
@@ -702,7 +702,7 @@ public class MyUber{
 		 * The four type of rides are proposed and he chooses the UberVan type.
 		 * The ride is completed and the customer can note the driver.
 		 */
-		
+		/*
 		platform.setDestination(c1,dest1);
 		platform.chooseRideType(c1, "UberVan");
 
@@ -716,7 +716,7 @@ public class MyUber{
 		 * The four type of rides are proposed and they all choose the UberPool type.
 		 * The ride is completed and customers can note the driver.
 		 */
-		
+		/*
 		platform.setDestination(c1,dest6);
 		platform.chooseRideType(c1, "UberPool");
 		platform.setDestination(c2,dest7);
@@ -737,7 +737,7 @@ public class MyUber{
 		 * the most appreciated driver
 		 * the most occupied driver
 		 */
-		
+		/*
 		platform.setDestination(c2,dest2);
 		platform.chooseRideType(c2, "UberBlack");
 		platform.setDestination(c3,dest3);
@@ -761,6 +761,6 @@ public class MyUber{
 		
 		/*End of use case scenario number 4
 		 */	
-	}
+	
 
 }
