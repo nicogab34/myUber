@@ -1,12 +1,15 @@
 
 package myUber;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -19,6 +22,7 @@ import customer.Customer;
 import driver.Driver;
 import driver.DriverAppreciationComparator;
 import driver.DriverOccupationComparator;
+import jdk.nashorn.internal.runtime.options.Options;
 import rides.Ride;
 import rides.RideFactory;
 import rides.UberBlack;
@@ -614,7 +618,27 @@ public class MyUber{
 		}	
 	
 
-	/*
+private static Map<String, String> parseParameters(final String[] args) {
+
+    final Map<String, String> parameters = new HashMap<>();
+
+    for (final String arg : args) {
+        if (!arg.startsWith("--")) {
+            System.err.println("Bad parameter: " + arg);
+            System.exit(2);
+        }
+
+        final String[] tab = arg.substring(2).split("=");
+        parameters.put(tab[0], tab[1]);
+    }
+
+    return parameters;
+}
+
+
+	
+	
+	
 	public static void main(String[] args) {
 		
 		/*Use Case scenario number 1:
@@ -622,7 +646,41 @@ public class MyUber{
 		 * as well as drivers, customers and cars.
 		 * Destinations are given to each customer.
 		 */
-		/*
+		boolean app = true;
+		Scanner scan = new Scanner(System.in);
+		while (app){
+			if (scan.hasNext()) {
+				String a = scan.nextLine();
+				if (a.equals("stop")) {
+					app=false;
+				}
+				String[] l=a.split(" ");
+				for (String s : l) {
+					System.out.println(s);
+				}
+				System.out.println(a);
+			}
+		}
+		scan.close();
+		
+		final Map<String, String> parameters = parseParameters(args);
+
+		String nameCust  = "name";
+		final String nameFromParameters = parameters.get("nameCust");
+		if (nameFromParameters != null) {
+		    nameCust=nameFromParameters;
+		}
+
+
+		final String surnameFromParameters = parameters.get("Surname");
+		String Surname  = "Surname";
+		if (surnameFromParameters != null) {
+		    Surname=surnameFromParameters;
+		}
+		
+		Customer c1 = new Customer(nameCust, Surname, new ArrayList<Double>(Arrays.asList(1.2, 4.3)), 125765894);
+		
+/*		
 		RideFactory rideFactory = new RideFactory();
 		
 		CarFactory carFactory = new CarFactory();
@@ -716,8 +774,8 @@ public class MyUber{
 		 * The four type of rides are proposed and he chooses the UberVan type.
 		 * The ride is completed and the customer can note the driver.
 		 */
-		/*
-		platform.setDestination(c1,dest1);
+		
+/*		platform.setDestination(c1,dest1);
 		platform.chooseRideType(c1, "UberVan");
 
 		/*End of use case scenario number 2
@@ -730,8 +788,8 @@ public class MyUber{
 		 * The four type of rides are proposed and they all choose the UberPool type.
 		 * The ride is completed and customers can note the driver.
 		 */
-		/*
-		platform.setDestination(c1,dest6);
+		
+/*		platform.setDestination(c1,dest6);
 		platform.chooseRideType(c1, "UberPool");
 		platform.setDestination(c2,dest7);
 		platform.chooseRideType(c2, "UberPool");
@@ -751,8 +809,8 @@ public class MyUber{
 		 * the most appreciated driver
 		 * the most occupied driver
 		 */
-		/*
-		platform.setDestination(c2,dest2);
+		
+/*		platform.setDestination(c2,dest2);
 		platform.chooseRideType(c2, "UberBlack");
 		platform.setDestination(c3,dest3);
 		platform.chooseRideType(c3, "UberVan");
@@ -776,5 +834,5 @@ public class MyUber{
 		/*End of use case scenario number 4
 		 */	
 	
-
+	}
 }
