@@ -1,9 +1,9 @@
 package Fare;
 
-import myUber.UberBlack;
-import myUber.UberPool;
-import myUber.UberVan;
-import myUber.UberX;
+import rides.UberBlack;
+import rides.UberPool;
+import rides.UberVan;
+import rides.UberX;
 
 public interface FareType {
 	double fare(String rideType,double rideDistance,String trafficCondition);

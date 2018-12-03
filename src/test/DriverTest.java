@@ -7,9 +7,9 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import myUber.Car;
-import myUber.CarFactory;
-import myUber.Driver;
+import cars.Car;
+import cars.CarFactory;
+import driver.Driver;
 
 class DriverTest {
 	@Test
