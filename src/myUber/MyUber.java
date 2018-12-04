@@ -801,6 +801,56 @@ public class MyUber{
 						System.out.println("Invalid number of arguments !");
 					}
 				}
+				else if (l[0].equals("moveCustomer")){
+					if (l.length == 4){
+						boolean found=false;
+						for (Customer c : platform.Customers) {
+							int id=(int) Integer.parseInt(l[1]);
+							if (c.getID()==id) {
+								found = true;															
+								ArrayList<Double> pos = new ArrayList<Double>();
+								pos.add(Double.parseDouble(l[2]));
+								pos.add(Double.parseDouble(l[3]));
+								c.setDestination(pos);
+								}	
+							}
+						
+						
+						System.out.println(platform.cars);
+						System.out.println(platform.drivers);
+						if (!found){
+							System.out.println("We can't find a car with this ID");
+						}
+					}
+					else {
+						System.out.println("Invalid number of arguments !");
+					}
+				}
+				
+				else if (l[0].equals("displayState")){
+					if (l.length == 1){
+						System.out.println(platform.cars);
+						System.out.println(platform.drivers);
+						System.out.println(platform.Customers);
+																						
+					}
+					else {
+						System.out.println("Invalid number of arguments !");
+					}
+				}
+				
+				else if (l[0].equals("ask4price")){
+					if (l.length == 4){
+						System.out.println(platform.cars);
+						System.out.println(platform.drivers);
+						System.out.println(platform.Customers);
+																						
+					}
+					else {
+						System.out.println("Invalid number of arguments !");
+					}
+				}
+				
 				
 			}
 		}
