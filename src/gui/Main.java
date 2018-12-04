@@ -8,7 +8,6 @@ public class Main {
 
 	public static void main(String[] args) {
 		Controlleur c = new Controlleur(new MyUber(new RideFactory(), new CarFactory()));
-
 	}
 
 }
