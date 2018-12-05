@@ -2,7 +2,9 @@ package gui;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -15,7 +17,7 @@ import javax.swing.border.MatteBorder;
 public class IU extends JFrame{
 	
 	static String[] panels = {"addCustomer","addCarDriver", "addDriver", "setDriverStatus", "moveCar", "moveCustomer", "displayState"};
-	static Integer[] textAreasNumbers = {2, 3, 3, 3, 3, 3, 0};
+	static String[][] textAreasNames = {{"name","surname"},{"name","surname","car type"},{"name","surname", "car ID"},{"name","surname","status"},{"              car ID","                   x","                   y"},{"Customer ID","x","y"},{}};
 	static ArrayList<JTextField> textAreas = new ArrayList<JTextField>();
 	ArrayList<JPanel> realpanels = new ArrayList<JPanel>();
 	ArrayList<ArrayList<JTextField>> realfields = new ArrayList<ArrayList<JTextField>>();
@@ -37,6 +39,7 @@ public class IU extends JFrame{
 		addListener();
 		this.setTitle("My Uber");
 		this.pack();
+		this.setSize(350,300);
 		this.setVisible(true);
 		this.setResizable(false);
 	}
@@ -69,13 +72,15 @@ public class IU extends JFrame{
 				realpanels.add(new JPanel());
 				realfields.add(new ArrayList<JTextField>());
 				realbuttons.add(new JButton(panels[i]));
-				for (int j=0;j<textAreasNumbers[i];j++) {
+				for (int j=0;j<textAreasNames[i].length;j++) {
 					realfields.get(realfields.size()-1).add(new JTextField(20));
 				}
-				realpanels.get(realpanels.size()-1).add(realbuttons.get(realbuttons.size()-1));
-				for (int j=0;j<textAreasNumbers[i];j++) {
+				for (int j=0;j<textAreasNames[i].length;j++) {
+					
+					realpanels.get(realpanels.size()-1).add(new JLabel(textAreasNames[i][j]+" : "));
 					realpanels.get(realpanels.size()-1).add(realfields.get(realfields.size()-1).get(j));
 				}
+				realpanels.get(realpanels.size()-1).add(realbuttons.get(realbuttons.size()-1));
 			}
 			
 			
