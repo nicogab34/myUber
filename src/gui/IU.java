@@ -1,7 +1,9 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -12,14 +14,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
 public class IU extends JFrame{
 	
 	static String[] panels = {"addCustomer","addCarDriver", "addDriver", "setDriverStatus", "moveCar", "moveCustomer", "displayState"};
-	static String[][] textAreasNames = {{"name","surname"},{"name","surname","car type"},{"name","surname", "car ID"},{"name","surname","status"},{"              car ID","                   x","                   y"},{"Customer ID","x","y"},{}};
+	static String[][] textAreasNames = {{"name","surname"},{"name","surname","car type"},{"name","surname", "car ID"},{"name","surname","status"},{"car ID","x","y"},{"Customer ID","x","y"},{}};
 	static ArrayList<JTextField> textAreas = new ArrayList<JTextField>();
-	ArrayList<JPanel> realpanels = new ArrayList<JPanel>();
+	ArrayList<JPanel> globalpanels = new ArrayList<JPanel>();
+	ArrayList<ArrayList<JPanel>> realpanels = new ArrayList<ArrayList<JPanel>>();
 	ArrayList<ArrayList<JTextField>> realfields = new ArrayList<ArrayList<JTextField>>();
 	ArrayList<JButton> realbuttons = new ArrayList<JButton>();
 	ArrayList<JButton> choicebuttons = new ArrayList<JButton>();
@@ -69,18 +74,23 @@ public class IU extends JFrame{
 			}
 			
 			for (int i=0;i<panels.length;i++) {
-				realpanels.add(new JPanel());
+				globalpanels.add(new JPanel(new SpringLayout()));
+				realpanels.add(new ArrayList<JPanel>());
 				realfields.add(new ArrayList<JTextField>());
 				realbuttons.add(new JButton(panels[i]));
 				for (int j=0;j<textAreasNames[i].length;j++) {
 					realfields.get(realfields.size()-1).add(new JTextField(20));
 				}
 				for (int j=0;j<textAreasNames[i].length;j++) {
-					
-					realpanels.get(realpanels.size()-1).add(new JLabel(textAreasNames[i][j]+" : "));
-					realpanels.get(realpanels.size()-1).add(realfields.get(realfields.size()-1).get(j));
+					realpanels.get(realpanels.size()-1).add(new JPanel());
+					realpanels.get(realpanels.size()-1).get(realpanels.get(realpanels.size()-1).size()-1).add(new JLabel(textAreasNames[i][j]+" : "));
+					realpanels.get(realpanels.size()-1).get(realpanels.get(realpanels.size()-1).size()-1).add(realfields.get(realfields.size()-1).get(j));
 				}
-				realpanels.get(realpanels.size()-1).add(realbuttons.get(realbuttons.size()-1));
+				for (JPanel p : realpanels.get(realpanels.size()-1)) {
+					globalpanels.get(globalpanels.size()-1).add(p);
+				}
+				realbuttons.get(realbuttons.size()-1).setAlignmentX(Component.RIGHT_ALIGNMENT);
+				globalpanels.get(globalpanels.size()-1).add(realbuttons.get(realbuttons.size()-1));
 			}
 			
 			
@@ -105,7 +115,8 @@ public class IU extends JFrame{
 	        pane.add(setuppane, "Setup pane");  
 	        pane.add(choicepane, "Choice pane");
 	        for (int i=0;i<panels.length;i++) {
-	        	pane.add(realpanels.get(i), panels[i]);
+	        	globalpanels.get(i).setAlignmentX(Component.RIGHT_ALIGNMENT);
+	        	pane.add(globalpanels.get(i), panels[i]);
 	        }
 	        //pane.add(addCustomerpane, "addCustomer pane");
 			
