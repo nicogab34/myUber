@@ -121,13 +121,21 @@ public class MyUber{
 	 */
 	public Driver search(Customer customer, String Ridetype){
 		Driver res = null;
+		boolean found = false;
 		for (int i=0;i<drivingDrivers.size();i++){
 			Car car=drivingDrivers.get(i).getCar();
 			if (((car.getRideType()==Ridetype) & (drivingDrivers.get(i).getState() == "on-duty") & ((res == null) || distance(customer,drivingDrivers.get(i))< distance(customer,res)))){
 				res = drivingDrivers.get(i);
+				found = true;
 			}
 		}
-		this.decideRequest(res, true, customer);
+		if (found){
+			this.decideRequest(res, true, customer);
+		}
+		else {
+			System.out.println("We can't find any driver matching with your request.");
+		}
+		
 		return res;
 			
 			
@@ -823,6 +831,24 @@ public class MyUber{
 		customer.setDestination(destination);		
 		System.out.println(getPrice(customer,trafficstate));
 	}
+	public void simRide(String c, String x, String y, String time, String rideType, String driverMark) {
+		double X=Double.parseDouble(x);
+		double Y=Double.parseDouble(y);
+		Customer C = null;
+		for (Customer e : this.Customers) {
+			if (e.getID()==Integer.parseInt(c)) {
+				C=e;
+			}
+		}
+		if (C.equals(null)) {
+			System.out.println("We can't find a customer with this ID");
+		}
+		else {
+			this.setDestination(C,new ArrayList<Double>(Arrays.asList(X, Y)));
+			this.chooseRideType(C, rideType);
+		}
+		
+	}
 	
 	public void displayDrivers(String sortpolicy){
 		if (sortpolicy.equalsIgnoreCase("mostoccupied")) {
@@ -910,6 +936,12 @@ public class MyUber{
 					else if (l[0].equals("ask4price")){
 							platform.ask4price(l[1],l[2],l[3],l[4]);
 					}
+					else if (l[0].equals("simRide")){
+						platform.simRide(l[1],l[2],l[3],l[4],l[5],l[6]);
+					}
+					/*else if (l[0].equals("simRide_i")){
+						platform.simRide_i(l[1],l[2],l[3],l[4]);
+					}*/
 					else if (l[0].equals("displayDrivers")){
 						platform.displayDrivers(l[1]);
 					}

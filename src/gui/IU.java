@@ -20,8 +20,8 @@ import javax.swing.border.MatteBorder;
 
 public class IU extends JFrame{
 	
-	static String[] panels = {"addCustomer","addCarDriver", "addDriver", "setDriverStatus", "moveCar", "moveCustomer", "displayState","ask4price","simRide", "simRide_i", "displayDrivers", "displayCustomers", "totalCashed"};
-	static String[][] textAreasNames = {{"name","surname"},{"name","surname","car type"},{"name","surname", "car ID"},{"name","surname","status"},{"car ID","x","y"},{"Customer ID","x","y"},{},{"customer ID", "x", "y", "time"}, {"customer ID", "x", "y", "time","ride type", "driver mark"}, {"customer ID", "x", "y", "time"}, {"sort policy"},{"sort policy"},{}};
+	static String[] panels = {"addCustomer","addCarDriver", "addDriver", "setDriverStatus", "moveCar", "moveCustomer", "displayState","ask4price","simRide", "displayDrivers", "displayCustomers", "totalCashed"};
+	static String[][] textAreasNames = {{"name","surname"},{"name","surname","car type"},{"name","surname", "car ID"},{"name","surname","status"},{"car ID","x","y"},{"Customer ID","x","y"},{},{"customer ID", "x", "y", "time"}, {"customer ID", "x", "y", "time","ride type", "driver mark"}, {"sort policy"},{"sort policy"},{}};
 	static ArrayList<JTextField> textAreas = new ArrayList<JTextField>();
 	ArrayList<JPanel> globalpanels = new ArrayList<JPanel>();
 	ArrayList<ArrayList<JPanel>> realpanels = new ArrayList<ArrayList<JPanel>>();
