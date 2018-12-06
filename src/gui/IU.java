@@ -34,7 +34,6 @@ public class IU extends JFrame{
 	protected JTextField nBerline;
 	protected JTextField nVan;
 	protected JTextField nCustomer;
-	String state = "setup";
 	CardLayout card = new CardLayout(); 
 	JPanel pane = new JPanel();
 	
@@ -44,25 +43,35 @@ public class IU extends JFrame{
 		addListener();
 		this.setTitle("My Uber");
 		this.pack();
-		this.setSize(350,300);
+		this.setSize(300,300);
 		this.setVisible(true);
 		this.setResizable(false);
 	}
 	
 	public void addContent() {
-		System.out.println(state);
-			
 			JPanel setuppane = new JPanel();
+			JPanel nS = new JPanel();
+			JPanel nB = new JPanel();
+			JPanel nV = new JPanel();
+			JPanel nC = new JPanel();
 			nStandard = new JTextField(20);
 			nBerline = new JTextField(20);
 			nVan = new JTextField(20);
 			nCustomer = new JTextField(20);
 			setup = new JButton("Setup");
+			nS.add(new JLabel("number of standard cars : "));
+			nS.add(nStandard);
+			nB.add(new JLabel("number of berline cars : "));
+			nB.add(nBerline);
+			nV.add(new JLabel("number of vans : "));
+			nV.add(nVan);
+			nC.add(new JLabel("number of customers : "));
+			nC.add(nCustomer);
 			setuppane.add(new JLabel("Welcome on you myUber platform !"));
-			setuppane.add(nStandard);
-			setuppane.add(nBerline);
-			setuppane.add(nVan);
-			setuppane.add(nCustomer);
+			setuppane.add(nS);
+			setuppane.add(nB);
+			setuppane.add(nV);
+			setuppane.add(nC);
 			setuppane.add(setup);
 			
 			JPanel choicepane = new JPanel();
@@ -74,12 +83,14 @@ public class IU extends JFrame{
 			}
 			
 			for (int i=0;i<panels.length;i++) {
-				globalpanels.add(new JPanel(new SpringLayout()));
+				globalpanels.add(new JPanel());
+				globalpanels.get(globalpanels.size()-1).add(new JLabel("Enter the relevant parameters to use "+panels[i]));
 				realpanels.add(new ArrayList<JPanel>());
 				realfields.add(new ArrayList<JTextField>());
 				realbuttons.add(new JButton(panels[i]));
 				for (int j=0;j<textAreasNames[i].length;j++) {
-					realfields.get(realfields.size()-1).add(new JTextField(20));
+					realfields.get(realfields.size()-1).add(new JTextField(18-textAreasNames[i][j].length()*2/3));
+					realfields.get(realfields.size()-1).get(realfields.get(realfields.size()-1).size()-1).setMinimumSize(new Dimension(150,40));
 				}
 				for (int j=0;j<textAreasNames[i].length;j++) {
 					realpanels.get(realpanels.size()-1).add(new JPanel());
@@ -89,7 +100,6 @@ public class IU extends JFrame{
 				for (JPanel p : realpanels.get(realpanels.size()-1)) {
 					globalpanels.get(globalpanels.size()-1).add(p);
 				}
-				realbuttons.get(realbuttons.size()-1).setAlignmentX(Component.RIGHT_ALIGNMENT);
 				globalpanels.get(globalpanels.size()-1).add(realbuttons.get(realbuttons.size()-1));
 			}
 			
@@ -115,10 +125,8 @@ public class IU extends JFrame{
 	        pane.add(setuppane, "Setup pane");  
 	        pane.add(choicepane, "Choice pane");
 	        for (int i=0;i<panels.length;i++) {
-	        	globalpanels.get(i).setAlignmentX(Component.RIGHT_ALIGNMENT);
 	        	pane.add(globalpanels.get(i), panels[i]);
 	        }
-	        //pane.add(addCustomerpane, "addCustomer pane");
 			
 			add(pane);
 	}

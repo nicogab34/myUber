@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import myUber.MyUber;
@@ -22,8 +23,13 @@ public class Controlleur extends IU{
 		setup.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-			      card.show(pane,"Choice pane");
-			      platform.setup(nStandard.getText(), nBerline.getText(), nVan.getText(), nCustomer.getText());
+			    try {
+			    	  platform.setup(nStandard.getText(), nBerline.getText(), nVan.getText(), nCustomer.getText());
+			    	  card.show(pane,"Choice pane");
+				}
+				catch(NumberFormatException e) {
+					JOptionPane.showMessageDialog(pane, "Make sure you filled every field with relevant content","Invalid request",JOptionPane.WARNING_MESSAGE);
+				}
 			}
 		});
 		
@@ -42,26 +48,31 @@ public class Controlleur extends IU{
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					card.show(pane,"Choice pane");
-					if (panels[k].equals("addCustomer")){
-						platform.addCustomer(realfields.get(k).get(0).getText(), realfields.get(k).get(1).getText());
+					try {
+						if (panels[k].equals("addCustomer")){
+							platform.addCustomer(realfields.get(k).get(0).getText(), realfields.get(k).get(1).getText());
+						}
+						else if (panels[k].equals("addCarDriver")){
+							platform.addCarDriver(realfields.get(k).get(0).getText(), realfields.get(k).get(1).getText(), realfields.get(k).get(2).getText());
+						}
+						else if (panels[k].equals("addDriver")){
+							platform.addDriver(realfields.get(k).get(0).getText(), realfields.get(k).get(1).getText(), realfields.get(k).get(2).getText());
+						}
+						else if (panels[k].equals("setDriverStatus")){
+							platform.setDriverStatus(realfields.get(k).get(0).getText(), realfields.get(k).get(1).getText(), realfields.get(k).get(2).getText());
+						}
+						else if (panels[k].equals("moveCar")){
+							platform.moveCar(realfields.get(k).get(0).getText(), realfields.get(k).get(1).getText(), realfields.get(k).get(2).getText());
+						}
+						else if (panels[k].equals("moveCustomer")){
+							platform.moveCustomer(realfields.get(k).get(0).getText(), realfields.get(k).get(1).getText(), realfields.get(k).get(2).getText());
+						}
+						else if (panels[k].equals("displayState")){
+							platform.displayState();
+						}
 					}
-					else if (panels[k].equals("addCarDriver")){
-						platform.addCarDriver(realfields.get(k).get(0).getText(), realfields.get(k).get(1).getText(), realfields.get(k).get(2).getText());
-					}
-					else if (panels[k].equals("addDriver")){
-						platform.addDriver(realfields.get(k).get(0).getText(), realfields.get(k).get(1).getText(), realfields.get(k).get(2).getText());
-					}
-					else if (panels[k].equals("setDriverStatus")){
-						platform.setDriverStatus(realfields.get(k).get(0).getText(), realfields.get(k).get(1).getText(), realfields.get(k).get(2).getText());
-					}
-					else if (panels[k].equals("moveCar")){
-						platform.moveCar(realfields.get(k).get(0).getText(), realfields.get(k).get(1).getText(), realfields.get(k).get(2).getText());
-					}
-					else if (panels[k].equals("moveCustomer")){
-						platform.moveCustomer(realfields.get(k).get(0).getText(), realfields.get(k).get(1).getText(), realfields.get(k).get(2).getText());
-					}
-					else if (panels[k].equals("displayState")){
-						platform.displayState();
+					catch(NumberFormatException e) {
+						JOptionPane.showMessageDialog(pane, "Make sure you filled every field with relevant content","Invalid request",JOptionPane.WARNING_MESSAGE);
 					}
 				}
 			});

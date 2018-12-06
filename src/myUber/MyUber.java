@@ -802,83 +802,52 @@ public class MyUber{
 				}
 				String[] l=a.split(" ");
 				/*Commande setup  <nStandardCars> <nBerlinCars> <nVanCars> <nCustomers> */
-				if (l[0].equalsIgnoreCase("setup")) {
-					platform.setup(l[1],l[2],l[3],l[4]);
-				}
-				
-				else if (l[0].equals("addCustomer")){
-					if (l.length == 3){
+				try {
+					if (l[0].equalsIgnoreCase("setup")) {
+						platform.setup(l[1],l[2],l[3],l[4]);
+					}
+					
+					else if (l[0].equals("addCustomer")){
 						platform.addCustomer(l[1], l[2]);
 					}
-					else {
-						System.out.println("Invalid number of arguments !");
-					}
-				}
-				else if (l[0].equals("addCarDriver")){
-					if (l.length == 4){
+					else if (l[0].equals("addCarDriver")){
 						platform.addCarDriver(l[1],l[2],l[3]);
 					}
-					else {
-						System.out.println("Invalid number of arguments !");
-					}
-				}
-				
-				else if (l[0].equals("addDriver")){
-					if (l.length == 4){
+					
+					else if (l[0].equals("addDriver")){
 						platform.addDriver(l[1],l[2],l[3]);
 					}
-					else {
-						System.out.println("Invalid number of arguments !");
-					}
-				}
-				
-				else if (l[0].equals("setDriverStatus")){
-					if (l.length == 4){
+					
+					else if (l[0].equals("setDriverStatus")){
 						platform.setDriverStatus(l[1],l[2],l[3]);
 					}
-					else {
-						System.out.println("Invalid number of arguments !");
-					}
-				}
-				
-				else if (l[0].equals("moveCar")){
-					if (l.length == 4){
+					
+					else if (l[0].equals("moveCar")){
 						platform.moveCar(l[1], l[2], l[3]);
 					}
-					else {
-						System.out.println("Invalid number of arguments !");
-					}
-				}
-				else if (l[0].equals("moveCustomer")){
-					if (l.length == 4){
+					else if (l[0].equals("moveCustomer")){
 						platform.moveCustomer(l[1],l[2],l[3]);
 					}
-					else {
-						System.out.println("Invalid number of arguments !");
+					
+					else if (l[0].equals("displayState")){
+						platform.displayState();
 					}
-				}
-				
-				else if (l[0].equals("displayState")){
-					if (l.length == 1){
-						platform.displayState();																
-					}
-					else {
-						System.out.println("Invalid number of arguments !");
-					}
-				}
-				
-				else if (l[0].equals("ask4price")){
-					if (l.length == 4){
-						System.out.println(platform.cars);
-						System.out.println(platform.drivers);
-						System.out.println(platform.Customers);
-																						
+					
+					else if (l[0].equals("ask4price")){
+							System.out.println(platform.cars);
+							System.out.println(platform.drivers);
+							System.out.println(platform.Customers);
 					}
 					else {
-						System.out.println("Invalid number of arguments !");
+						System.out.println("Unkown command");
 					}
 				}
-				
+				catch(NumberFormatException e) {
+					System.out.println("Make sure you filled every field with relevant content");
+				}
+				catch(ArrayIndexOutOfBoundsException e) {
+					System.out.println("Not enough arguments");
+				}
 				
 			}
 		}
