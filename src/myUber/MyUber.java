@@ -513,6 +513,35 @@ public class MyUber{
 		return(null);
 	}
 	
+	public static String trafficState(int heure) {
+		double a=Math.random();
+		if ((heure<7)&(heure>=22)) {
+			if (a<0.95) {return"low";}
+			if ((a>=0.95)&(a<0.99)) {return("medium");}
+			if (a>0.99) {return"heavy";}
+			
+		}
+		if ((heure>=7)&(heure<11)) {
+			if (a<0.05) {return"low";}
+			if ((a>=0.05)&(a<0.25)) {return("medium");}
+			if (a>0.25) {return"heavy";}
+			
+		}
+		if ((heure>=11)&(heure<17)) {
+			if (a<0.15) {return"low";}
+			if ((a>=0.85)&(a<0.99)) {return("medium");}
+			if (a>0.85) {return"heavy";}
+			
+		}
+		if ((heure>=17)&(heure<22)) {
+			if (a<0.01) {return"low";}
+			if ((a>=0.05)&(a<0.95)) {return("medium");}
+			if (a>0.95) {return"heavy";}
+			
+		}
+		return(null);
+	}
+	
 	/**
 	 * 
 	 * @param trafficstate
@@ -777,6 +806,51 @@ public class MyUber{
 		System.out.println(this.Customers);
 	}
 	
+	public void ask4price(String cId,String x,String y,String time) {
+		int t=Integer.parseInt(time);
+		int ID=Integer.parseInt(cId);
+		double X=Double.parseDouble(x);
+		double Y=Double.parseDouble(y);
+		ArrayList<Double> destination=new ArrayList<Double>();
+		destination.add(X);
+		destination.add(Y);	
+		Customer customer=null;
+		for (Customer c: Customers) {
+			if(c.getID()==ID) {customer=c;}
+			else{System.out.println("customer not found");}					
+		}
+		String trafficstate=trafficState(t);
+		customer.setDestination(destination);		
+		System.out.println(getPrice(customer,trafficstate));
+	}
+	
+	public void displayDrivers(String sortpolicy){
+		if (sortpolicy.equalsIgnoreCase("mostoccupied")) {
+			System.out.println(OccupationSortingDriver());
+		}
+		if (sortpolicy.equalsIgnoreCase("mostappreciated")) {
+			System.out.println(AppreciationSortingDriver());			
+		}
+		else {System.out.println("unknown command");}
+	}
+	
+	public void displayCustomers(String sortpolicy){
+		if (sortpolicy.equalsIgnoreCase("mostfrequent")) {
+			System.out.println(FrequencySortingCustomer());
+		}
+		if (sortpolicy.equalsIgnoreCase("mostcharged")) {
+			System.out.println(ChargeSortingCustomer());
+		}
+		else {System.out.println("unknown command");}
+	}
+	
+	public void totalCharged() {
+		double total=0;
+		for(Driver d:drivingDrivers) {
+			total+=d.getMoneyCashed();			
+		}
+		System.out.println(total);
+	}
 
 	
 	public static void main(String[] args) {
@@ -834,9 +908,16 @@ public class MyUber{
 					}
 					
 					else if (l[0].equals("ask4price")){
-							System.out.println(platform.cars);
-							System.out.println(platform.drivers);
-							System.out.println(platform.Customers);
+							platform.ask4price(l[1],l[2],l[3],l[4]);
+					}
+					else if (l[0].equals("displayDrivers")){
+						platform.displayDrivers(l[1]);
+					}
+					else if (l[0].equals("displayDrivers")) {
+						platform.displayCustomers(l[1]);
+					}
+					else if (l[0].equals("totalCharged")) {
+						platform.totalCharged();
 					}
 					else {
 						System.out.println("Unkown command");
