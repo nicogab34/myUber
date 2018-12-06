@@ -20,12 +20,13 @@ import javax.swing.border.MatteBorder;
 
 public class IU extends JFrame{
 	
-	static String[] panels = {"addCustomer","addCarDriver", "addDriver", "setDriverStatus", "moveCar", "moveCustomer", "displayState"};
-	static String[][] textAreasNames = {{"name","surname"},{"name","surname","car type"},{"name","surname", "car ID"},{"name","surname","status"},{"car ID","x","y"},{"Customer ID","x","y"},{}};
+	static String[] panels = {"addCustomer","addCarDriver", "addDriver", "setDriverStatus", "moveCar", "moveCustomer", "displayState","ask4price","simRide", "simRide_i", "displayDrivers", "displayCustomers", "totalCashed"};
+	static String[][] textAreasNames = {{"name","surname"},{"name","surname","car type"},{"name","surname", "car ID"},{"name","surname","status"},{"car ID","x","y"},{"Customer ID","x","y"},{},{"customer ID", "x", "y", "time"}, {"customer ID", "x", "y", "time","ride type", "driver mark"}, {"customer ID", "x", "y", "time"}, {"sort policy"},{"sort policy"},{}};
 	static ArrayList<JTextField> textAreas = new ArrayList<JTextField>();
 	ArrayList<JPanel> globalpanels = new ArrayList<JPanel>();
 	ArrayList<ArrayList<JPanel>> realpanels = new ArrayList<ArrayList<JPanel>>();
 	ArrayList<ArrayList<JTextField>> realfields = new ArrayList<ArrayList<JTextField>>();
+	ArrayList<ArrayList<JLabel>> reallabels = new ArrayList<ArrayList<JLabel>>();
 	ArrayList<JButton> realbuttons = new ArrayList<JButton>();
 	ArrayList<JButton> choicebuttons = new ArrayList<JButton>();
 
@@ -36,6 +37,7 @@ public class IU extends JFrame{
 	protected JTextField nCustomer;
 	CardLayout card = new CardLayout(); 
 	JPanel pane = new JPanel();
+	ArrayList<JButton> backs = new ArrayList<JButton>();
 	
 	public IU() {
 		super();
@@ -54,10 +56,10 @@ public class IU extends JFrame{
 			JPanel nB = new JPanel();
 			JPanel nV = new JPanel();
 			JPanel nC = new JPanel();
-			nStandard = new JTextField(20);
-			nBerline = new JTextField(20);
-			nVan = new JTextField(20);
-			nCustomer = new JTextField(20);
+			nStandard = new JTextField(18-26*2/5);
+			nBerline = new JTextField(18-25*2/5);
+			nVan = new JTextField(18-22*2/5);
+			nCustomer = new JTextField(18-27*2/5);
 			setup = new JButton("Setup");
 			nS.add(new JLabel("number of standard cars : "));
 			nS.add(nStandard);
@@ -84,17 +86,21 @@ public class IU extends JFrame{
 			
 			for (int i=0;i<panels.length;i++) {
 				globalpanels.add(new JPanel());
+				backs.add(new JButton("Back"));
+				globalpanels.get(globalpanels.size()-1).add(backs.get(backs.size()-1));
 				globalpanels.get(globalpanels.size()-1).add(new JLabel("Enter the relevant parameters to use "+panels[i]));
 				realpanels.add(new ArrayList<JPanel>());
 				realfields.add(new ArrayList<JTextField>());
+				reallabels.add(new ArrayList<JLabel>());
 				realbuttons.add(new JButton(panels[i]));
 				for (int j=0;j<textAreasNames[i].length;j++) {
-					realfields.get(realfields.size()-1).add(new JTextField(18-textAreasNames[i][j].length()*2/3));
+					realfields.get(realfields.size()-1).add(new JTextField(18-textAreasNames[i][j].length()*2/5));
 					realfields.get(realfields.size()-1).get(realfields.get(realfields.size()-1).size()-1).setMinimumSize(new Dimension(150,40));
+					reallabels.get(reallabels.size()-1).add(new JLabel(textAreasNames[i][j]+" : "));
 				}
 				for (int j=0;j<textAreasNames[i].length;j++) {
 					realpanels.get(realpanels.size()-1).add(new JPanel());
-					realpanels.get(realpanels.size()-1).get(realpanels.get(realpanels.size()-1).size()-1).add(new JLabel(textAreasNames[i][j]+" : "));
+					realpanels.get(realpanels.size()-1).get(realpanels.get(realpanels.size()-1).size()-1).add(reallabels.get(reallabels.size()-1).get(j));
 					realpanels.get(realpanels.size()-1).get(realpanels.get(realpanels.size()-1).size()-1).add(realfields.get(realfields.size()-1).get(j));
 				}
 				for (JPanel p : realpanels.get(realpanels.size()-1)) {
@@ -127,7 +133,6 @@ public class IU extends JFrame{
 	        for (int i=0;i<panels.length;i++) {
 	        	pane.add(globalpanels.get(i), panels[i]);
 	        }
-			
 			add(pane);
 	}
 	

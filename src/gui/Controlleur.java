@@ -44,6 +44,12 @@ public class Controlleur extends IU{
 		
 		for (int i=0;i<panels.length;i++) {
 			final int k = i;
+			backs.get(i).addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+				      card.show(pane,"Choice pane");
+				}
+			});
 			realbuttons.get(i).addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
@@ -67,8 +73,23 @@ public class Controlleur extends IU{
 						else if (panels[k].equals("moveCustomer")){
 							platform.moveCustomer(realfields.get(k).get(0).getText(), realfields.get(k).get(1).getText(), realfields.get(k).get(2).getText());
 						}
-						else if (panels[k].equals("displayState")){
-							platform.displayState();
+						else if (panels[k].equals("ask4Price")){
+							platform.ask4Price(realfields.get(k).get(0).getText(), realfields.get(k).get(1).getText(), realfields.get(k).get(2).getText(), realfields.get(k).get(3).getText());
+						}
+						else if (panels[k].equals("simRide")){
+							platform.simRide(realfields.get(k).get(0).getText(), realfields.get(k).get(1).getText(), realfields.get(k).get(2).getText(), realfields.get(k).get(3).getText(), realfields.get(k).get(4).getText(), realfields.get(k).get(5).getText());
+						}
+						else if (panels[k].equals("simRide")){
+							platform.simRide(realfields.get(k).get(0).getText(), realfields.get(k).get(1).getText(), realfields.get(k).get(2).getText(), realfields.get(k).get(3).getText());
+						}
+						else if (panels[k].equals("displayDrivers")){
+							platform.displayDrivers(realfields.get(k).get(0).getText());
+						}
+						else if (panels[k].equals("displayCustomers")){
+							platform.displayCustomers(realfields.get(k).get(0).getText());
+						}
+						else if (panels[k].equals("totalCashed")){
+							platform.totalCashed();
 						}
 					}
 					catch(NumberFormatException e) {
