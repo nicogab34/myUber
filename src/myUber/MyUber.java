@@ -844,7 +844,7 @@ public class MyUber{
 		else {System.out.println("unknown command");}
 	}
 	
-	public void totalCharged() {
+	public void totalCashed() {
 		double total=0;
 		for(Driver d:drivingDrivers) {
 			total+=d.getMoneyCashed();			
@@ -916,8 +916,8 @@ public class MyUber{
 					else if (l[0].equals("displayDrivers")) {
 						platform.displayCustomers(l[1]);
 					}
-					else if (l[0].equals("totalCharged")) {
-						platform.totalCharged();
+					else if (l[0].equals("totalCashed")) {
+						platform.totalCashed();
 					}
 					else {
 						System.out.println("Unkown command");

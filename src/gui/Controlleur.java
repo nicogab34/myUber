@@ -74,14 +74,14 @@ public class Controlleur extends IU{
 							platform.moveCustomer(realfields.get(k).get(0).getText(), realfields.get(k).get(1).getText(), realfields.get(k).get(2).getText());
 						}
 						else if (panels[k].equals("ask4Price")){
-							platform.ask4Price(realfields.get(k).get(0).getText(), realfields.get(k).get(1).getText(), realfields.get(k).get(2).getText(), realfields.get(k).get(3).getText());
+							platform.ask4price(realfields.get(k).get(0).getText(), realfields.get(k).get(1).getText(), realfields.get(k).get(2).getText(), realfields.get(k).get(3).getText());
 						}
-						else if (panels[k].equals("simRide")){
+						/*else if (panels[k].equals("simRide")){
 							platform.simRide(realfields.get(k).get(0).getText(), realfields.get(k).get(1).getText(), realfields.get(k).get(2).getText(), realfields.get(k).get(3).getText(), realfields.get(k).get(4).getText(), realfields.get(k).get(5).getText());
 						}
 						else if (panels[k].equals("simRide")){
 							platform.simRide(realfields.get(k).get(0).getText(), realfields.get(k).get(1).getText(), realfields.get(k).get(2).getText(), realfields.get(k).get(3).getText());
-						}
+						}*/
 						else if (panels[k].equals("displayDrivers")){
 							platform.displayDrivers(realfields.get(k).get(0).getText());
 						}
