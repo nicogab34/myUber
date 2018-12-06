@@ -124,7 +124,7 @@ public class MyUber{
 		boolean found = false;
 		for (int i=0;i<drivingDrivers.size();i++){
 			Car car=drivingDrivers.get(i).getCar();
-			if (((car.getRideType()==Ridetype) & (drivingDrivers.get(i).getState() == "on-duty") & ((res == null) || distance(customer,drivingDrivers.get(i))< distance(customer,res)))){
+			if (((car.getRideType().equalsIgnoreCase(Ridetype)) & (drivingDrivers.get(i).getState().equalsIgnoreCase("on-duty") ) & ((found==false)||distance(customer,drivingDrivers.get(i))< distance(customer,res)))){
 				res = drivingDrivers.get(i);
 				found = true;
 			}
@@ -666,7 +666,13 @@ public class MyUber{
 		Collections.sort(ListeTrie, c1);
 		return(ListeTrie);
 		}	
-	
+	/**
+	 *  create a myUber consisting of nStadardCars standard cars , nBerlinCars berlin cars, nVanCars van cars and nCustomers customers
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @param d
+	 */
 	public void setup(String a, String b, String c, String d) {
 		int nStandard=Integer.parseInt(a);
 		int nBerline=Integer.parseInt(b);
@@ -702,7 +708,11 @@ public class MyUber{
 		System.out.println(this.drivingDrivers);
 		
 	}
-	
+	/**
+	 *  to add a customer with name customerName and surname customerSurname.
+	 * @param name
+	 * @param surname
+	 */
 	public void addCustomer(String name, String surname) {
 			Random r = new Random();
 			double x = 100*r.nextDouble()-50;
@@ -712,7 +722,12 @@ public class MyUber{
 			this.add(customer);
 			System.out.println(this.Customers);	
 	}
-	
+	/**
+	 * to add a driver with given name and surname and a car of type carType and and associate the newly created driver to the newly created car 
+	 * @param name
+	 * @param surname
+	 * @param carType
+	 */
 	public void addCarDriver(String name, String surname, String carType) {
 		Driver driver = new Driver(name,surname,"off-duty",new ArrayList<Double>(Arrays.asList(0.,0.)));
 		String rideType = "";
@@ -734,7 +749,12 @@ public class MyUber{
 		System.out.println(this.drivers);
 		System.out.println(this.cars);	
 	}
-	
+	/**
+	 *  to add a driver with given name and surname and to an existing car with ID carID. 
+	 * @param name
+	 * @param surname
+	 * @param carID
+	 */
 	public void addDriver(String name, String surname, String carID) {
 		Driver driver = new Driver(name,surname,"off-duty",new ArrayList<Double>(Arrays.asList(0.,0.)));
 		this.add(driver);
@@ -752,7 +772,12 @@ public class MyUber{
 			System.out.println("We can't find a car with this ID");
 		}
 	}
-	
+	/**
+	 *  to set the status of a driver with given name and surname to a given value status 
+	 * @param name
+	 * @param surname
+	 * @param status
+	 */
 	public void setDriverStatus(String name, String surname, String status) {
 		boolean found=false;
 		for (Driver d : this.drivers) {
@@ -766,7 +791,12 @@ public class MyUber{
 			System.out.println("We can't find a driver with this name and surname");
 		}
 	}
-	
+	/**
+	 * to set the position of car carID to co-ordinates xPos,yPos.
+	 * @param carID
+	 * @param x
+	 * @param y
+	 */
 	public void moveCar(String carID, String x, String y) {
 		boolean found=false;
 		for (Car c : this.cars) {
@@ -788,7 +818,12 @@ public class MyUber{
 			System.out.println("We can't find a car with this ID");
 		}
 	}
-	
+	/**
+	 *  to set the position of customer custID to co-ordinates xPos,yPos.
+	 * @param sid
+	 * @param x
+	 * @param y
+	 */
 	public void moveCustomer(String sid, String x, String y) {
 		boolean found=false;
 		for (Customer c : this.Customers) {
@@ -807,13 +842,21 @@ public class MyUber{
 			System.out.println("We can't find a customer with this ID");
 		}
 	}
-	
+	/**
+	 *  display summary information of the current state of the system, including the list of cars (with their position), the list of drivers (with their status, their statistics, etc), the list of customers (with their position, their statistics)
+	 */
 	public void displayState() {
 		System.out.println(this.cars);
 		System.out.println(this.drivers);
 		System.out.println(this.Customers);
 	}
-	
+	/**
+	 * to let the customer customerID to ask for the price of ride to a given destination 
+	 * @param cId
+	 * @param x
+	 * @param y
+	 * @param time
+	 */
 	public void ask4price(String cId,String x,String y,String time) {
 		int t=Integer.parseInt(time);
 		int ID=Integer.parseInt(cId);
@@ -824,13 +867,26 @@ public class MyUber{
 		destination.add(Y);	
 		Customer customer=null;
 		for (Customer c: Customers) {
-			if(c.getID()==ID) {customer=c;}
-			else{System.out.println("customer not found");}					
+			if(c.getID()==ID) {customer=c;}				
 		}
-		String trafficstate=trafficState(t);
-		customer.setDestination(destination);		
-		System.out.println(getPrice(customer,trafficstate));
+		if (customer.equals(null)) {
+			System.out.println("We can't find a customer with this ID");
+		}
+		else {
+			String trafficstate=trafficState(t);
+			customer.setDestination(destination);		
+			System.out.println(getPrice(customer,trafficstate));
+		}
 	}
+	/**
+	 * to simulate a ride request and ride execution for a given customer (i.e. customerID) wanting a ride of a given type (rideType) to a given destination (destination) at a given time (time) and expressing a given evaluation (driverMark) for the driver taking the ride. 
+	 * @param c
+	 * @param x
+	 * @param y
+	 * @param time
+	 * @param rideType
+	 * @param driverMark
+	 */
 	public void simRide(String c, String x, String y, String time, String rideType, String driverMark) {
 		double X=Double.parseDouble(x);
 		double Y=Double.parseDouble(y);
@@ -849,7 +905,10 @@ public class MyUber{
 		}
 		
 	}
-	
+	/**
+	 * to display the drivers in the myUber system in increasing order w.r.t. to the sorting policy (where sortpolicy can be either mostappreciated, or mostoccupied). 
+	 * @param sortpolicy
+	 */
 	public void displayDrivers(String sortpolicy){
 		if (sortpolicy.equalsIgnoreCase("mostoccupied")) {
 			System.out.println(OccupationSortingDriver());
@@ -859,7 +918,10 @@ public class MyUber{
 		}
 		else {System.out.println("unknown command");}
 	}
-	
+	/**
+	 *  to display the customers in the myUber system in increasing order w.r.t. to the sorting policy (where sortpolicy can be either mostfrequent, or mostcharged).
+	 * @param sortpolicy
+	 */
 	public void displayCustomers(String sortpolicy){
 		if (sortpolicy.equalsIgnoreCase("mostfrequent")) {
 			System.out.println(FrequencySortingCustomer());
@@ -869,13 +931,68 @@ public class MyUber{
 		}
 		else {System.out.println("unknown command");}
 	}
-	
+	/**
+	 *  to display the total amount of money cashed by all drivers in the myUber system. 
+	 */
 	public void totalCashed() {
 		double total=0;
 		for(Driver d:drivingDrivers) {
 			total+=d.getMoneyCashed();			
 		}
 		System.out.println(total);
+	}
+	/**
+	 *  to simulate a ride request and ride execution. This command is the interactive version of simRide, as the user, has to interactively exchange information with the CLUI in order to chose the the kind of ride, express the evaluation for the driver, etc.)
+	 * @param c
+	 * @param x
+	 * @param y
+	 * @param time
+	 */
+	public void simRide_i(String c, String x,String y, String time) {
+		double X=Double.parseDouble(x);
+		double Y=Double.parseDouble(y);
+		Customer C = null;
+		int t=Integer.parseInt(time);
+		for (Customer e : this.Customers) {
+			if (e.getID()==Integer.parseInt(c)) {
+				C=e;
+			}
+		}
+		if (C.equals(null)) {
+			System.out.println("We can't find a customer with this ID");
+		}
+		else {
+			this.setDestination(C,new ArrayList<Double>(Arrays.asList(X, Y)));
+		}
+		ask4price(c,x,y,time);
+		Scanner scan = new Scanner(System.in);
+		boolean a=true;
+		System.out.println("Entrez le type de course que vous voulez");
+		String RideType= scan.nextLine();
+		if (RideType.equalsIgnoreCase("UberX")) {RideType="UberX";}
+		if (RideType.equalsIgnoreCase("UberPool")) {RideType="UberPool";}
+		if (RideType.equalsIgnoreCase("UberVan")) {RideType="UberVan";}
+		if (RideType.equalsIgnoreCase("UberBlack")) {RideType="UberBlack";}
+		else {a=false;System.out.println("bad entry");}
+		if(a==true) {
+			Driver d= search(C,RideType);
+			this.chooseRideType(C, RideType);
+			System.out.println(d.getID());
+			System.out.println(C.getID());
+			System.out.println(d.getCar().getID());
+			System.out.println(RideType);
+		
+			Double Rate=scan.nextDouble();
+			System.out.println("Entrez une note entre 0 et 5");
+			if(Rate<0){System.out.println("bad entry");a=false;}
+			if(Rate>5){System.out.println("bad entry");a=false;}
+			if(a==true) {
+				d.setAppreciationRate(Rate);
+				System.out.println(Customers);
+				System.out.println(drivingDrivers);
+				System.out.println(cars);
+			}
+		}
 	}
 
 	
@@ -901,7 +1018,6 @@ public class MyUber{
 					app=false;
 				}
 				String[] l=a.split(" ");
-				/*Commande setup  <nStandardCars> <nBerlinCars> <nVanCars> <nCustomers> */
 				try {
 					if (l[0].equalsIgnoreCase("setup")) {
 						platform.setup(l[1],l[2],l[3],l[4]);
@@ -939,9 +1055,9 @@ public class MyUber{
 					else if (l[0].equals("simRide")){
 						platform.simRide(l[1],l[2],l[3],l[4],l[5],l[6]);
 					}
-					/*else if (l[0].equals("simRide_i")){
+					else if (l[0].equals("simRide_i")){
 						platform.simRide_i(l[1],l[2],l[3],l[4]);
-					}*/
+					}
 					else if (l[0].equals("displayDrivers")){
 						platform.displayDrivers(l[1]);
 					}
